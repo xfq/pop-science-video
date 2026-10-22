@@ -12,7 +12,7 @@
 
 也可以直接把仓库地址发给它：
 
-> 帮我安装这个 skill：`<this-repo>`，然后用它做一支讲清 TCP 三次握手的科普片，面向没有计算机背景的受众。
+> 帮我安装这个 skill：https://github.com/xfq/pop-science-video ，然后用它做一支讲清 TCP 三次握手的科普片，面向没有计算机背景的受众。
 
 安装、验证、首次做片、更新/卸载和排错见 [INSTALL.md](INSTALL.md)。发布到 GitHub 后也可以用 `npx skills add <repo> --skill pop-science-video`。
 
