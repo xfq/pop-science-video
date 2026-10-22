@@ -54,6 +54,8 @@ node build.mjs
 4. 生成 `index.html`：宿主、字幕、音频、进度条。
 5. 写 `build-report.json`。
 
+每个镜头的页脚由 `lib/theme.mjs` 的 `sceneFooter(scene)` 生成：左侧来源、右侧备注；没有品牌、章节名或镜头编号顶栏。要改字体或颜色只改这一处。
+
 ### 镜头 JS 的关键点
 
 ```js

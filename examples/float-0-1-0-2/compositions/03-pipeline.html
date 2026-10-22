@@ -25,13 +25,6 @@
 .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,transparent 42%,rgba(0,0,0,.55) 100%)}
 .scan{position:absolute;inset:0;pointer-events:none;opacity:.35;
   background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4px)}
-.topbar{position:absolute;top:52px;left:120px;right:120px;display:flex;align-items:center;justify-content:space-between;
-  font-family:var(--mono);font-size:24px;letter-spacing:.08em;color:var(--muted);z-index:20}
-.brand{display:flex;align-items:center;gap:16px}
-.brand-mark{width:12px;height:12px;background:var(--cyan);box-shadow:0 0 18px rgba(94,234,212,.8)}
-.chapter{display:flex;align-items:center;gap:12px;color:var(--faint)}
-.chapter b{color:var(--ink);font-weight:500}
-.chapter .dot{width:8px;height:8px;border-radius:50%;background:var(--amber)}
 .foot{position:absolute;left:120px;right:120px;bottom:154px;display:flex;justify-content:space-between;align-items:flex-end;
   font-family:var(--mono);font-size:21px;line-height:1.5;color:var(--faint);z-index:20;letter-spacing:.01em}
 .foot .src{max-width:1180px}
@@ -79,12 +72,7 @@
   <div class="glow" style="left:-260px;top:-420px"></div>
   <div class="vignette"></div>
   <div class="scan"></div>
-  <div class="noise"></div>
-  <div class="topbar">
-    <div class="brand"><span class="brand-mark"></span><span>CS / 03</span></div>
-    <div class="chapter"><span class="dot"></span><span>机制</span><b>03 / 08</b></div>
-  </div>
-  <div class="foot"><div class="src">IEEE 754-2019 · Python 3.14 实机</div><div>ROUND-TO-NEAREST</div></div>
+  <div class="noise"></div><div class="foot"><div class="src">IEEE 754-2019 · Python 3.14 实机</div><div>ROUND-TO-NEAREST</div></div>
   <div class="stage top">
     <div class="stage-head">
       <div class="kicker" data-intro>一次存储，两次舍入</div>

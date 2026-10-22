@@ -113,6 +113,10 @@ class DemoTests(unittest.TestCase):
             self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
             index = (tmp / "index.html").read_text(encoding="utf-8")
             self.assertEqual(index.count('data-composition-src="compositions/'), 9)  # 8 scenes + captions
+            hook = (tmp / "compositions" / "01-hook.html").read_text(encoding="utf-8")
+            self.assertNotIn('class="topbar"', hook, "no persistent top bar")
+            self.assertNotIn('class="brand"', hook, "no brand chrome")
+            self.assertIn('class="foot"', hook, "footer with sources remains")
             report = json.loads((tmp / "build-report.json").read_text(encoding="utf-8"))
             self.assertEqual(report["scenes"][0]["id"], "hook")
             timeline = json.loads((tmp / "timeline.json").read_text(encoding="utf-8"))

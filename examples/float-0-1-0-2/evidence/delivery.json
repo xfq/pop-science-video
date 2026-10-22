@@ -16,9 +16,9 @@
   "meanVolume": -19.0,
   "firstFrame": {
    "ok": true,
-   "stddev": 30.89,
-   "mean": 18.38,
-   "colors": 249
+   "stddev": 30.59,
+   "mean": 18.25,
+   "colors": 248
   },
   "captions": 34
  }

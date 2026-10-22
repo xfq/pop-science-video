@@ -1,8 +1,8 @@
-import { baseCss, bgLayers, sceneChrome, THEME } from "./theme.mjs";
+import { baseCss, bgLayers, sceneFooter, THEME } from "./theme.mjs";
 import { esc, groupBits } from "./util.mjs";
 
 function shell(ctx, cls, body, opts = {}) {
-  return `<div class="scene ${cls}">${bgLayers(opts)}${sceneChrome(ctx.scene, ctx.index, ctx.total)}${body}</div>`;
+  return `<div class="scene ${cls}">${bgLayers(opts)}${sceneFooter(ctx.scene)}${body}</div>`;
 }
 
 function attr(name, value) {

@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { splitCaption, estimateTimeline, fmtTime } from "../assets/template/lib/util.mjs";
+import { sceneFooter } from "../assets/template/lib/theme.mjs";
 
 test("splitCaption keeps decimal numbers intact", () => {
   const pieces = splitCaption("但计算机给出的是 0.30000000000000004。");
@@ -31,4 +32,11 @@ test("estimateTimeline is contiguous by default", () => {
 test("fmtTime trims trailing zeros", () => {
   assert.equal(fmtTime(2.5), "2.5");
   assert.equal(fmtTime(3), "3");
+});
+
+test("sceneFooter keeps sources and notes, no brand or chapter chrome", () => {
+  const html = sceneFooter({ chapter: "机制", footer: "来源", footnote: "53 位" });
+  assert.match(html, /来源/);
+  assert.match(html, /53 位/);
+  assert.doesNotMatch(html, /<span>CS<\/span>|机制|topbar|brand/);
 });

@@ -60,13 +60,6 @@ export function baseCss() {
 .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,transparent 42%,rgba(0,0,0,.55) 100%)}
 .scan{position:absolute;inset:0;pointer-events:none;opacity:.35;
   background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4px)}
-.topbar{position:absolute;top:52px;left:120px;right:120px;display:flex;align-items:center;justify-content:space-between;
-  font-family:var(--mono);font-size:24px;letter-spacing:.08em;color:var(--muted);z-index:20}
-.brand{display:flex;align-items:center;gap:16px}
-.brand-mark{width:12px;height:12px;background:var(--cyan);box-shadow:0 0 18px rgba(94,234,212,.8)}
-.chapter{display:flex;align-items:center;gap:12px;color:var(--faint)}
-.chapter b{color:var(--ink);font-weight:500}
-.chapter .dot{width:8px;height:8px;border-radius:50%;background:var(--amber)}
 .foot{position:absolute;left:120px;right:120px;bottom:154px;display:flex;justify-content:space-between;align-items:flex-end;
   font-family:var(--mono);font-size:21px;line-height:1.5;color:var(--faint);z-index:20;letter-spacing:.01em}
 .foot .src{max-width:1180px}
@@ -86,14 +79,12 @@ export function baseCss() {
 `;
 }
 
-export function sceneChrome(scene, index, total) {
+// No persistent top bar: a brand, chapter label or scene counter eats attention
+// without adding meaning. Only the footer survives, and only when it carries
+// something the viewer can use (sources, a caveat, a measurement).
+export function sceneFooter(scene) {
   const src = scene.footer ? `<div class="src">${esc(scene.footer)}</div>` : "<div></div>";
-  return `
-  <div class="topbar">
-    <div class="brand"><span class="brand-mark"></span><span>CS / ${String(index + 1).padStart(2, "0")}</span></div>
-    <div class="chapter"><span class="dot"></span><span>${esc(scene.chapter || "科普")}</span><b>${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}</b></div>
-  </div>
-  <div class="foot">${src}<div>${esc(scene.footnote || "")}</div></div>`;
+  return `<div class="foot">${src}<div>${esc(scene.footnote || "")}</div></div>`;
 }
 
 export function bgLayers({ fine = false, glow = true, scan = true, noise = true } = {}) {

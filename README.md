@@ -2,7 +2,7 @@
 
 一个面向 AI agent 的制片的流程：从选题开始，做成一支横版或竖版的科普视频。所有画面由 HTML/CSS/GSAP 渲染，工程可复现、可继续改。
 
-<!-- ![示例：为什么 0.1 + 0.2 不等于 0.3](examples/float-0-1-0-2/stills/hero.jpg) -->
+![示例：为什么 0.1 + 0.2 不等于 0.3](examples/float-0-1-0-2/stills/hero.jpg)
 
 ## 如何使用
 
