@@ -64,8 +64,7 @@ export function baseCss() {
   font-family:var(--mono);font-size:21px;line-height:1.5;color:var(--faint);z-index:20;letter-spacing:.01em}
 .foot .src{max-width:1180px}
 .foot b{color:var(--muted);font-weight:500}
-.kicker{font-family:var(--mono);font-size:28px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:16px}
-.kicker::before{content:"";width:54px;height:2px;background:var(--cyan);display:block}
+.kicker{font-family:var(--mono);font-size:28px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
 .h1{font-family:var(--body);font-weight:800;font-size:76px;line-height:1.16;letter-spacing:-.02em;margin:0}
 .h1 em{font-style:normal;color:var(--cyan)}
 .mono{font-family:var(--mono)}
