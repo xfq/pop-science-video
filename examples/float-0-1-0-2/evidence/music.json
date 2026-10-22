@@ -1,0 +1,10 @@
+{
+ "file": "assets/music.wav",
+ "duration": 101.515,
+ "mood": "curious",
+ "bpm": 92,
+ "seed": 7418,
+ "source": "original numpy synthesis",
+ "lufs": -14.7,
+ "truePeak": -2.8
+}

@@ -1,0 +1,34 @@
+scene,scene_index,i,id,file,caption,tts,targetSeconds,pauseAfter,mark
+hook,1,0,hook-000,hook-000.wav,如果我问你：0.1 加 0.2 等于多少？,如果我问你，零点一加零点二等于多少？,3.54,0.26,q
+hook,1,1,hook-001,hook-001.wav,你大概会说：0.3 啊。,你大概会说，零点三啊。,2.15,0.26,
+hook,1,2,hook-002,hook-002.wav,但计算机给出的是 0.30000000000000004。,但计算机给出的是，零点三，后面十五个零，再一个四。,5.22,0.26,result
+hook,1,3,hook-003,hook-003.wav,这不是 bug。,这不是 bug。,0.74,0.5,note
+pivot,2,0,pivot-000,pivot-000.wav,这不是 bug，也不是 Python 的锅。,这不是 bug，也不是 Python 的锅。,2.36,0.26,line1
+pivot,2,1,pivot-001,pivot-001.wav,是二进制。,是二进制。,0.8,0.26,line2
+pivot,2,2,pivot-002,pivot-002.wav,换 JavaScript、C、Java，结果都一样。,换 JavaScript、C、Java，结果都一样。,3.56,0.26,sub
+pipeline,3,0,pipeline-000,pipeline-000.wav,0.1 在二进制里无限循环。,零点一在二进制里无限循环。,2.65,0.26,s0
+pipeline,3,1,pipeline-001,pipeline-001.wav,一个 double 只留 53 位。,一个双精度浮点数，只留五十三位。,3.16,0.26,s1
+pipeline,3,2,pipeline-002,pipeline-002.wav,多出来的部分，舍入到最近的 53 位。,多出来的部分，舍入到最近的五十三位。,3.4,0.26,s2
+pipeline,3,3,pipeline-003,pipeline-003.wav,存进去的 0.1 已不再精确。,存进去的零点一，已经不再精确。,2.98,0.26,s3
+pipeline,3,4,pipeline-004,pipeline-004.wav,相加，再舍入一次。,相加，再舍入一次。,1.89,0.26,s4
+pipeline,3,5,pipeline-005,pipeline-005.wav,误差从输入就开始了。,误差从输入就开始了。,1.77,0.26,foot
+bitfield,4,0,bitfield-000,bitfield-000.wav,一个 double 占 64 位。,一个双精度浮点数，占六十四位。,2.85,0.26,b0
+bitfield,4,1,bitfield-001,bitfield-001.wav,符号 1 位，指数 11 位，尾数 52 位。,符号一位，指数十一位，尾数五十二位。,3.5,0.26,b1
+bitfield,4,2,bitfield-002,bitfield-002.wav,尾数前面隐含一个 1。,尾数前面隐含一个一。,1.74,0.26,b2
+bitfield,4,3,bitfield-003,bitfield-003.wav,所以有效数字是 53 位。,所以有效数字是五十三位。,2.25,0.26,bits
+code,5,0,code-000,code-000.wav,在 Python 里，0.1 的真实值长这样。,在 Python 里，零点一的真实值长这样。,3.09,0.26,l0
+code,5,1,code-001,code-001.wav,两个近似值相加，得到 0.30000000000000004。,两个近似值相加，得到的是零点三，后面十五个零，再一个四。,5.79,0.26,l2
+code,5,2,code-002,code-002.wav,等号比较返回 False。,等号比较返回 False。,1.78,0.26,l4
+code,5,3,code-003,code-003.wav,要比较，用 math.isclose。,要比较，用 math 的 is close 函数。,2.66,0.26,l5
+code,5,4,code-004,code-004.wav,存进去的 0.1 已不是 0.1。,存进去的零点一，已经不是零点一。,3.08,0.35,note
+numbers,6,0,numbers-000,numbers-000.wav,53 位有效数字。,五十三位有效数字。,1.55,0.26,n0
+numbers,6,1,numbers-001,numbers-001.wav,大约 16 位十进制。,大约十六位十进制。,1.56,0.26,n1
+numbers,6,2,numbers-002,numbers-002.wav,和 0.3 只差 1 个 ulp。,和零点三只差一个 U L P。,2.23,0.26,n2
+numbers,6,3,numbers-003,numbers-003.wav,误差是确定的，不是随机噪声。,误差是确定的，不是随机噪声。,2.76,0.26,eq
+recap,7,0,recap-000,recap-000.wav,比较小数，别用等号。,比较小数，别用等号。,2.02,0.26,r0
+recap,7,1,recap-001,recap-001.wav,金额用整数分。,金额用整数分。,1.28,0.26,r1
+recap,7,2,recap-002,recap-002.wav,要精确十进制，用 Decimal。,要精确十进制，用 Decimal。,2.37,0.26,r2
+recap,7,3,recap-003,recap-003.wav,浮点适合计算，不适合账本。,浮点适合计算，不适合账本。,2.56,0.35,foot
+outro,8,0,outro-000,outro-000.wav,浮点数不是不准。,浮点数不是不准。,1.42,0.26,q0
+outro,8,1,outro-001,outro-001.wav,它只是在用固定位数逼近无限。,它只是在用固定位数逼近无限。,2.66,0.26,q1
+outro,8,2,outro-002,outro-002.wav,下期，拆开这 64 个格子。,下期，拆开这六十四个格子。,2.56,0.5,next

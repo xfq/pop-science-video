@@ -1,0 +1,598 @@
+{
+ "version": 1,
+ "estimated": false,
+ "duration": 100.524,
+ "scenes": [
+  {
+   "id": "hook",
+   "index": 0,
+   "start": 0.0,
+   "duration": 13.831,
+   "marks": {
+    "q": 0.2,
+    "result": 6.414,
+    "note": 11.895
+   },
+   "chunks": [
+    {
+     "id": "hook-000",
+     "caption": "如果我问你：0.1 加 0.2 等于多少？",
+     "text": "如果我问你，零点一加零点二等于多少？",
+     "start": 0.15,
+     "dur": 3.539,
+     "mark": "q",
+     "sfx": null
+    },
+    {
+     "id": "hook-001",
+     "caption": "你大概会说：0.3 啊。",
+     "text": "你大概会说，零点三啊。",
+     "start": 3.949,
+     "dur": 2.155,
+     "mark": null,
+     "sfx": null
+    },
+    {
+     "id": "hook-002",
+     "caption": "但计算机给出的是 0.30000000000000004。",
+     "text": "但计算机给出的是，零点三，后面十五个零，再一个四。",
+     "start": 6.364,
+     "dur": 5.221,
+     "mark": "result",
+     "sfx": null
+    },
+    {
+     "id": "hook-003",
+     "caption": "这不是 bug。",
+     "text": "这不是 bug。",
+     "start": 11.845,
+     "dur": 0.736,
+     "mark": "note",
+     "sfx": null
+    }
+   ],
+   "estimated": false
+  },
+  {
+   "id": "pivot",
+   "index": 1,
+   "start": 13.851,
+   "duration": 8.394,
+   "marks": {
+    "line1": 14.051,
+    "line2": 16.667,
+    "sub": 17.729
+   },
+   "chunks": [
+    {
+     "id": "pivot-000",
+     "caption": "这不是 bug，也不是 Python 的锅。",
+     "text": "这不是 bug，也不是 Python 的锅。",
+     "start": 14.001,
+     "dur": 2.356,
+     "mark": "line1",
+     "sfx": null
+    },
+    {
+     "id": "pivot-001",
+     "caption": "是二进制。",
+     "text": "是二进制。",
+     "start": 16.617,
+     "dur": 0.802,
+     "mark": "line2",
+     "sfx": null
+    },
+    {
+     "id": "pivot-002",
+     "caption": "换 JavaScript、C、Java，结果都一样。",
+     "text": "换 JavaScript、C、Java，结果都一样。",
+     "start": 17.679,
+     "dur": 3.556,
+     "mark": "sub",
+     "sfx": null
+    }
+   ],
+   "estimated": false
+  },
+  {
+   "id": "pipeline",
+   "index": 2,
+   "start": 22.265,
+   "duration": 18.319,
+   "marks": {
+    "s0": 22.465,
+    "s1": 25.372,
+    "s2": 28.792,
+    "s3": 32.456,
+    "s4": 35.7,
+    "foot": 37.854
+   },
+   "chunks": [
+    {
+     "id": "pipeline-000",
+     "caption": "0.1 在二进制里无限循环。",
+     "text": "零点一在二进制里无限循环。",
+     "start": 22.415,
+     "dur": 2.647,
+     "mark": "s0",
+     "sfx": null
+    },
+    {
+     "id": "pipeline-001",
+     "caption": "一个 double 只留 53 位。",
+     "text": "一个双精度浮点数，只留五十三位。",
+     "start": 25.322,
+     "dur": 3.16,
+     "mark": "s1",
+     "sfx": null
+    },
+    {
+     "id": "pipeline-002",
+     "caption": "多出来的部分，舍入到最近的 53 位。",
+     "text": "多出来的部分，舍入到最近的五十三位。",
+     "start": 28.742,
+     "dur": 3.404,
+     "mark": "s2",
+     "sfx": null
+    },
+    {
+     "id": "pipeline-003",
+     "caption": "存进去的 0.1 已不再精确。",
+     "text": "存进去的零点一，已经不再精确。",
+     "start": 32.406,
+     "dur": 2.984,
+     "mark": "s3",
+     "sfx": null
+    },
+    {
+     "id": "pipeline-004",
+     "caption": "相加，再舍入一次。",
+     "text": "相加，再舍入一次。",
+     "start": 35.65,
+     "dur": 1.894,
+     "mark": "s4",
+     "sfx": null
+    },
+    {
+     "id": "pipeline-005",
+     "caption": "误差从输入就开始了。",
+     "text": "误差从输入就开始了。",
+     "start": 37.804,
+     "dur": 1.77,
+     "mark": "foot",
+     "sfx": null
+    }
+   ],
+   "estimated": false
+  },
+  {
+   "id": "bitfield",
+   "index": 3,
+   "start": 40.604,
+   "duration": 12.294,
+   "marks": {
+    "b0": 40.804,
+    "b1": 43.919,
+    "b2": 47.684,
+    "bits": 49.686
+   },
+   "chunks": [
+    {
+     "id": "bitfield-000",
+     "caption": "一个 double 占 64 位。",
+     "text": "一个双精度浮点数，占六十四位。",
+     "start": 40.754,
+     "dur": 2.855,
+     "mark": "b0",
+     "sfx": null
+    },
+    {
+     "id": "bitfield-001",
+     "caption": "符号 1 位，指数 11 位，尾数 52 位。",
+     "text": "符号一位，指数十一位，尾数五十二位。",
+     "start": 43.869,
+     "dur": 3.505,
+     "mark": "b1",
+     "sfx": null
+    },
+    {
+     "id": "bitfield-002",
+     "caption": "尾数前面隐含一个 1。",
+     "text": "尾数前面隐含一个一。",
+     "start": 47.634,
+     "dur": 1.742,
+     "mark": "b2",
+     "sfx": null
+    },
+    {
+     "id": "bitfield-003",
+     "caption": "所以有效数字是 53 位。",
+     "text": "所以有效数字是五十三位。",
+     "start": 49.636,
+     "dur": 2.252,
+     "mark": "bits",
+     "sfx": null
+    }
+   ],
+   "estimated": false
+  },
+  {
+   "id": "code",
+   "index": 4,
+   "start": 52.918,
+   "duration": 18.698,
+   "marks": {
+    "l0": 53.118,
+    "l2": 56.469,
+    "l4": 62.518,
+    "l5": 64.562,
+    "note": 67.483
+   },
+   "chunks": [
+    {
+     "id": "code-000",
+     "caption": "在 Python 里，0.1 的真实值长这样。",
+     "text": "在 Python 里，零点一的真实值长这样。",
+     "start": 53.068,
+     "dur": 3.091,
+     "mark": "l0",
+     "sfx": null
+    },
+    {
+     "id": "code-001",
+     "caption": "两个近似值相加，得到 0.30000000000000004。",
+     "text": "两个近似值相加，得到的是零点三，后面十五个零，再一个四。",
+     "start": 56.419,
+     "dur": 5.789,
+     "mark": "l2",
+     "sfx": null
+    },
+    {
+     "id": "code-002",
+     "caption": "等号比较返回 False。",
+     "text": "等号比较返回 False。",
+     "start": 62.468,
+     "dur": 1.784,
+     "mark": "l4",
+     "sfx": null
+    },
+    {
+     "id": "code-003",
+     "caption": "要比较，用 math.isclose。",
+     "text": "要比较，用 math 的 is close 函数。",
+     "start": 64.512,
+     "dur": 2.661,
+     "mark": "l5",
+     "sfx": null
+    },
+    {
+     "id": "code-004",
+     "caption": "存进去的 0.1 已不是 0.1。",
+     "text": "存进去的零点一，已经不是零点一。",
+     "start": 67.433,
+     "dur": 3.083,
+     "mark": "note",
+     "sfx": null
+    }
+   ],
+   "estimated": false
+  },
+  {
+   "id": "numbers",
+   "index": 5,
+   "start": 71.636,
+   "duration": 10.035,
+   "marks": {
+    "n0": 71.836,
+    "n1": 73.647,
+    "n2": 75.468,
+    "eq": 77.954
+   },
+   "chunks": [
+    {
+     "id": "numbers-000",
+     "caption": "53 位有效数字。",
+     "text": "五十三位有效数字。",
+     "start": 71.786,
+     "dur": 1.551,
+     "mark": "n0",
+     "sfx": null
+    },
+    {
+     "id": "numbers-001",
+     "caption": "大约 16 位十进制。",
+     "text": "大约十六位十进制。",
+     "start": 73.597,
+     "dur": 1.561,
+     "mark": "n1",
+     "sfx": null
+    },
+    {
+     "id": "numbers-002",
+     "caption": "和 0.3 只差 1 个 ulp。",
+     "text": "和零点三只差一个 U L P。",
+     "start": 75.418,
+     "dur": 2.226,
+     "mark": "n2",
+     "sfx": null
+    },
+    {
+     "id": "numbers-003",
+     "caption": "误差是确定的，不是随机噪声。",
+     "text": "误差是确定的，不是随机噪声。",
+     "start": 77.904,
+     "dur": 2.757,
+     "mark": "eq",
+     "sfx": null
+    }
+   ],
+   "estimated": false
+  },
+  {
+   "id": "recap",
+   "index": 6,
+   "start": 81.691,
+   "duration": 10.263,
+   "marks": {
+    "r0": 81.891,
+    "r1": 84.171,
+    "r2": 85.715,
+    "foot": 88.348
+   },
+   "chunks": [
+    {
+     "id": "recap-000",
+     "caption": "比较小数，别用等号。",
+     "text": "比较小数，别用等号。",
+     "start": 81.841,
+     "dur": 2.02,
+     "mark": "r0",
+     "sfx": null
+    },
+    {
+     "id": "recap-001",
+     "caption": "金额用整数分。",
+     "text": "金额用整数分。",
+     "start": 84.121,
+     "dur": 1.284,
+     "mark": "r1",
+     "sfx": null
+    },
+    {
+     "id": "recap-002",
+     "caption": "要精确十进制，用 Decimal。",
+     "text": "要精确十进制，用 Decimal。",
+     "start": 85.665,
+     "dur": 2.373,
+     "mark": "r2",
+     "sfx": null
+    },
+    {
+     "id": "recap-003",
+     "caption": "浮点适合计算，不适合账本。",
+     "text": "浮点适合计算，不适合账本。",
+     "start": 88.298,
+     "dur": 2.556,
+     "mark": "foot",
+     "sfx": null
+    }
+   ],
+   "estimated": false
+  },
+  {
+   "id": "outro",
+   "index": 7,
+   "start": 91.974,
+   "duration": 8.55,
+   "marks": {
+    "q0": 92.174,
+    "q1": 93.851,
+    "next": 96.769
+   },
+   "chunks": [
+    {
+     "id": "outro-000",
+     "caption": "浮点数不是不准。",
+     "text": "浮点数不是不准。",
+     "start": 92.124,
+     "dur": 1.417,
+     "mark": "q0",
+     "sfx": null
+    },
+    {
+     "id": "outro-001",
+     "caption": "它只是在用固定位数逼近无限。",
+     "text": "它只是在用固定位数逼近无限。",
+     "start": 93.801,
+     "dur": 2.658,
+     "mark": "q1",
+     "sfx": null
+    },
+    {
+     "id": "outro-002",
+     "caption": "下期，拆开这 64 个格子。",
+     "text": "下期，拆开这六十四个格子。",
+     "start": 96.719,
+     "dur": 2.555,
+     "mark": "next",
+     "sfx": null
+    }
+   ],
+   "estimated": false
+  }
+ ],
+ "captions": [
+  {
+   "text": "如果我问你：0.1 加 0.2 等于多少？",
+   "start": 0.15,
+   "dur": 3.539
+  },
+  {
+   "text": "你大概会说：0.3 啊。",
+   "start": 3.949,
+   "dur": 2.155
+  },
+  {
+   "text": "但计算机给出的是 0.30000000000000004。",
+   "start": 6.364,
+   "dur": 5.221
+  },
+  {
+   "text": "这不是 bug。",
+   "start": 11.845,
+   "dur": 0.736
+  },
+  {
+   "text": "这不是 bug，也不是 Python 的锅。",
+   "start": 14.001,
+   "dur": 2.356
+  },
+  {
+   "text": "是二进制。",
+   "start": 16.617,
+   "dur": 0.802
+  },
+  {
+   "text": "换 JavaScript、C、Java，结果都一样。",
+   "start": 17.679,
+   "dur": 3.556
+  },
+  {
+   "text": "0.1 在二进制里无限循环。",
+   "start": 22.415,
+   "dur": 2.647
+  },
+  {
+   "text": "一个 double 只留 53 位。",
+   "start": 25.322,
+   "dur": 3.16
+  },
+  {
+   "text": "多出来的部分，舍入到最近的 53 位。",
+   "start": 28.742,
+   "dur": 3.404
+  },
+  {
+   "text": "存进去的 0.1 已不再精确。",
+   "start": 32.406,
+   "dur": 2.984
+  },
+  {
+   "text": "相加，再舍入一次。",
+   "start": 35.65,
+   "dur": 1.894
+  },
+  {
+   "text": "误差从输入就开始了。",
+   "start": 37.804,
+   "dur": 1.77
+  },
+  {
+   "text": "一个 double 占 64 位。",
+   "start": 40.754,
+   "dur": 2.855
+  },
+  {
+   "text": "符号 1 位，指数 11 位，尾数 52 位。",
+   "start": 43.869,
+   "dur": 3.505
+  },
+  {
+   "text": "尾数前面隐含一个 1。",
+   "start": 47.634,
+   "dur": 1.742
+  },
+  {
+   "text": "所以有效数字是 53 位。",
+   "start": 49.636,
+   "dur": 2.252
+  },
+  {
+   "text": "在 Python 里，0.1 的真实值长这样。",
+   "start": 53.068,
+   "dur": 3.091
+  },
+  {
+   "text": "两个近似值相加，",
+   "start": 56.419,
+   "dur": 1.434
+  },
+  {
+   "text": "得到 0.30000000000000004。",
+   "start": 57.913,
+   "dur": 4.295
+  },
+  {
+   "text": "等号比较返回 False。",
+   "start": 62.468,
+   "dur": 1.784
+  },
+  {
+   "text": "要比较，用 math.isclose。",
+   "start": 64.512,
+   "dur": 2.661
+  },
+  {
+   "text": "存进去的 0.1 已不是 0.1。",
+   "start": 67.433,
+   "dur": 3.083
+  },
+  {
+   "text": "53 位有效数字。",
+   "start": 71.786,
+   "dur": 1.551
+  },
+  {
+   "text": "大约 16 位十进制。",
+   "start": 73.597,
+   "dur": 1.561
+  },
+  {
+   "text": "和 0.3 只差 1 个 ulp。",
+   "start": 75.418,
+   "dur": 2.226
+  },
+  {
+   "text": "误差是确定的，不是随机噪声。",
+   "start": 77.904,
+   "dur": 2.757
+  },
+  {
+   "text": "比较小数，别用等号。",
+   "start": 81.841,
+   "dur": 2.02
+  },
+  {
+   "text": "金额用整数分。",
+   "start": 84.121,
+   "dur": 1.284
+  },
+  {
+   "text": "要精确十进制，用 Decimal。",
+   "start": 85.665,
+   "dur": 2.373
+  },
+  {
+   "text": "浮点适合计算，不适合账本。",
+   "start": 88.298,
+   "dur": 2.556
+  },
+  {
+   "text": "浮点数不是不准。",
+   "start": 92.124,
+   "dur": 1.417
+  },
+  {
+   "text": "它只是在用固定位数逼近无限。",
+   "start": 93.801,
+   "dur": 2.658
+  },
+  {
+   "text": "下期，拆开这 64 个格子。",
+   "start": 96.719,
+   "dur": 2.555
+  }
+ ],
+ "fps": 30,
+ "targetSeconds": 99.0
+}

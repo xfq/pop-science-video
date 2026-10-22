@@ -1,0 +1,479 @@
+{
+ "meta": {
+  "title": "为什么 0.1 + 0.2 不等于 0.3",
+  "slug": "float-0-1-0-2",
+  "language": "zh-CN",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "audience": "对计算机好奇、但没有学过浮点数的观众",
+  "targetSeconds": 101,
+  "sceneGap": 0.02,
+  "takeaway": "浮点数用固定位数逼近实数；0.1 和 0.2 从存进去那一刻就被舍入，结果自然不是精确的 0.3。",
+  "voice": {
+   "provider": "auto",
+   "voice": "Tingting",
+   "rate": 190,
+   "edgeVoice": "zh-CN-YunxiNeural",
+   "edgeRate": "+8%",
+   "lexicon": {}
+  }
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "type": "hook",
+   "chapter": "开场",
+   "kicker": "一个每天都在发生的怪事",
+   "a": "0.1",
+   "b": "0.2",
+   "result": "0.30000000000000004",
+   "note": "这不是 bug。",
+   "bits": "0011111110111001100110011001100110011001100110011001100110011010",
+   "hex": "0x3FB999999999999A",
+   "footer": "IEEE 754 binary64 · Python / JS / C / Java 实机一致",
+   "footnote": "EP. 001 / 浮点数",
+   "claim": true,
+   "sources": [
+    "c1",
+    "c9"
+   ],
+   "narration": [
+    {
+     "caption": "如果我问你：0.1 加 0.2 等于多少？",
+     "tts": "如果我问你，零点一加零点二等于多少？",
+     "mark": "q"
+    },
+    {
+     "caption": "你大概会说：0.3 啊。",
+     "tts": "你大概会说，零点三啊。"
+    },
+    {
+     "caption": "但计算机给出的是 0.30000000000000004。",
+     "tts": "但计算机给出的是，零点三，后面十五个零，再一个四。",
+     "mark": "result"
+    },
+    {
+     "caption": "这不是 bug。",
+     "tts": "这不是 bug。",
+     "mark": "note",
+     "pause": 0.5
+    }
+   ]
+  },
+  {
+   "id": "pivot",
+   "type": "statement",
+   "chapter": "转折",
+   "tag": "THE PIVOT",
+   "line1": "不是 bug。",
+   "line2": "是二进制。",
+   "sub": "所有遵循 IEEE 754 的语言，都会给出同一个答案。",
+   "index": "01 — 问题的形状",
+   "footer": "IEEE 754-2019 · Goldberg 1991",
+   "footnote": "53 BITS",
+   "claim": true,
+   "sources": [
+    "c1",
+    "c2"
+   ],
+   "narration": [
+    {
+     "caption": "这不是 bug，也不是 Python 的锅。",
+     "tts": "这不是 bug，也不是 Python 的锅。",
+     "mark": "line1"
+    },
+    {
+     "caption": "是二进制。",
+     "tts": "是二进制。",
+     "mark": "line2"
+    },
+    {
+     "caption": "换 JavaScript、C、Java，结果都一样。",
+     "tts": "换 JavaScript、C、Java，结果都一样。",
+     "mark": "sub"
+    }
+   ]
+  },
+  {
+   "id": "pipeline",
+   "type": "pipeline",
+   "chapter": "机制",
+   "kicker": "一次存储，两次舍入",
+   "title": "0.1 是怎么变成“近似值”的？",
+   "steps": [
+    {
+     "label": "0.1",
+     "sub": "你写下的十进制",
+     "note": "看起来是精确的"
+    },
+    {
+     "label": "0.000110011…",
+     "sub": "二进制展开",
+     "note": "0011 无限循环"
+    },
+    {
+     "label": "53 位",
+     "sub": "截断 + 舍入",
+     "note": "存进 binary64"
+    },
+    {
+     "label": "0.1 + 0.2",
+     "sub": "两个近似值相加",
+     "note": "结果再舍入一次"
+    },
+    {
+     "label": "0.30000000000000004",
+     "sub": "落在一个可表示的数上",
+     "note": "不是精确的 0.3",
+     "tone": "amber"
+    }
+   ],
+   "foot": "误差不是最后一步才出现的；它从输入就开始了。",
+   "footer": "IEEE 754-2019 · Python 3.14 实机",
+   "footnote": "ROUND-TO-NEAREST",
+   "claim": true,
+   "sources": [
+    "c2",
+    "c3",
+    "c4"
+   ],
+   "narration": [
+    {
+     "caption": "0.1 在二进制里无限循环。",
+     "tts": "零点一在二进制里无限循环。",
+     "mark": "s0"
+    },
+    {
+     "caption": "一个 double 只留 53 位。",
+     "tts": "一个双精度浮点数，只留五十三位。",
+     "mark": "s1"
+    },
+    {
+     "caption": "多出来的部分，舍入到最近的 53 位。",
+     "tts": "多出来的部分，舍入到最近的五十三位。",
+     "mark": "s2"
+    },
+    {
+     "caption": "存进去的 0.1 已不再精确。",
+     "tts": "存进去的零点一，已经不再精确。",
+     "mark": "s3"
+    },
+    {
+     "caption": "相加，再舍入一次。",
+     "tts": "相加，再舍入一次。",
+     "mark": "s4"
+    },
+    {
+     "caption": "误差从输入就开始了。",
+     "tts": "误差从输入就开始了。",
+     "mark": "foot"
+    }
+   ]
+  },
+  {
+   "id": "bitfield",
+   "type": "bitfield",
+   "chapter": "编码",
+   "kicker": "拆开一个 double",
+   "title": "64 位里，只有 53 位存有效数字",
+   "segments": [
+    {
+     "label": "符号",
+     "bits": 1,
+     "tone": "amber",
+     "note": "0 正 / 1 负"
+    },
+    {
+     "label": "指数",
+     "bits": 11,
+     "tone": "cyan",
+     "note": "偏置 1023"
+    },
+    {
+     "label": "尾数",
+     "bits": 52,
+     "tone": "blue",
+     "note": "隐含最高位 1"
+    }
+   ],
+   "bits": "0011111110111001100110011001100110011001100110011001100110011010",
+   "hex": "0x3FB999999999999A",
+   "note": "52 位尾数 + 1 位隐含的 1 = 53 位有效数字。",
+   "footer": "IEEE 754-2019 · binary64",
+   "footnote": "0.1 = 0x1.999999999999ap-4",
+   "claim": true,
+   "sources": [
+    "c3"
+   ],
+   "narration": [
+    {
+     "caption": "一个 double 占 64 位。",
+     "tts": "一个双精度浮点数，占六十四位。",
+     "mark": "b0"
+    },
+    {
+     "caption": "符号 1 位，指数 11 位，尾数 52 位。",
+     "tts": "符号一位，指数十一位，尾数五十二位。",
+     "mark": "b1"
+    },
+    {
+     "caption": "尾数前面隐含一个 1。",
+     "tts": "尾数前面隐含一个一。",
+     "mark": "b2"
+    },
+    {
+     "caption": "所以有效数字是 53 位。",
+     "tts": "所以有效数字是五十三位。",
+     "mark": "bits"
+    }
+   ]
+  },
+  {
+   "id": "code",
+   "type": "code",
+   "chapter": "验证",
+   "kicker": "让计算机自己回答",
+   "titleLines": [
+    "存进去的 0.1，",
+    "已经不是 0.1。"
+   ],
+   "lang": "python3",
+   "lines": [
+    {
+     "text": ">>> (0.1).hex()",
+     "tone": "in",
+     "mark": "l0"
+    },
+    {
+     "text": "'0x1.999999999999ap-4'",
+     "tone": "str",
+     "mark": "l0"
+    },
+    {
+     "text": ">>> 0.1 + 0.2",
+     "tone": "in",
+     "mark": "l2"
+    },
+    {
+     "text": "0.30000000000000004",
+     "tone": "out",
+     "mark": "l2"
+    },
+    {
+     "text": ">>> 0.1 + 0.2 == 0.3",
+     "tone": "in",
+     "mark": "l4"
+    },
+    {
+     "text": "False",
+     "tone": "err",
+     "mark": "l4"
+    },
+    {
+     "text": ">>> math.isclose(0.1 + 0.2, 0.3)",
+     "tone": "in",
+     "mark": "l5"
+    },
+    {
+     "text": "True",
+     "tone": "out",
+     "mark": "l5"
+    }
+   ],
+   "note": "十六进制里，0.1 的尾数已经是一串近似值。",
+   "aside": "0.1 的真实值\n0.10000000000000000555…",
+   "footer": "Python 3.14 · 实机输出",
+   "footnote": "HEX / ISCLOSE",
+   "claim": true,
+   "sources": [
+    "c5",
+    "c1",
+    "c6"
+   ],
+   "narration": [
+    {
+     "caption": "在 Python 里，0.1 的真实值长这样。",
+     "tts": "在 Python 里，零点一的真实值长这样。",
+     "mark": "l0"
+    },
+    {
+     "caption": "两个近似值相加，得到 0.30000000000000004。",
+     "tts": "两个近似值相加，得到的是零点三，后面十五个零，再一个四。",
+     "mark": "l2"
+    },
+    {
+     "caption": "等号比较返回 False。",
+     "tts": "等号比较返回 False。",
+     "mark": "l4"
+    },
+    {
+     "caption": "要比较，用 math.isclose。",
+     "tts": "要比较，用 math 的 is close 函数。",
+     "mark": "l5"
+    },
+    {
+     "caption": "存进去的 0.1 已不是 0.1。",
+     "tts": "存进去的零点一，已经不是零点一。",
+     "mark": "note",
+     "pause": 0.35
+    }
+   ]
+  },
+  {
+   "id": "numbers",
+   "type": "numbers",
+   "chapter": "尺度",
+   "kicker": "误差到底有多大",
+   "title": "53 位，大约 16 位十进制",
+   "stats": [
+    {
+     "value": "53",
+     "unit": "位",
+     "label": "有效二进制数字",
+     "note": "1 位符号 + 11 位指数 + 52 位尾数",
+     "tone": "cyan"
+    },
+    {
+     "value": "16",
+     "unit": "位",
+     "label": "十进制有效数字",
+     "note": "约 15–17 位，取决于具体数值"
+    },
+    {
+     "value": "1",
+     "unit": "ulp",
+     "label": "与 0.3 的差",
+     "note": "ulp = 最后一位的 1 个单位"
+    }
+   ],
+   "equation": "0.30000000000000004 − 0.3 = 5.551115123125783e-17",
+   "footer": "IEEE 754-2019 · Python 3.14",
+   "footnote": "1 ULP ≈ 5.55e-17",
+   "claim": true,
+   "sources": [
+    "c7",
+    "c3"
+   ],
+   "narration": [
+    {
+     "caption": "53 位有效数字。",
+     "tts": "五十三位有效数字。",
+     "mark": "n0"
+    },
+    {
+     "caption": "大约 16 位十进制。",
+     "tts": "大约十六位十进制。",
+     "mark": "n1"
+    },
+    {
+     "caption": "和 0.3 只差 1 个 ulp。",
+     "tts": "和零点三只差一个 U L P。",
+     "mark": "n2"
+    },
+    {
+     "caption": "误差是确定的，不是随机噪声。",
+     "tts": "误差是确定的，不是随机噪声。",
+     "mark": "eq"
+    }
+   ]
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "chapter": "小结",
+   "kicker": "带走三件事",
+   "title": "下次写代码，记住这三条",
+   "items": [
+    {
+     "n": "01",
+     "title": "比较小数，别用等号",
+     "note": "用 math.isclose(a, b)，或者自己给一个容差。",
+     "code": "math.isclose(a, b)"
+    },
+    {
+     "n": "02",
+     "title": "金额用整数分",
+     "note": "10.25 元存成 1025 分，只在显示时除以 100。",
+     "code": "1025  # 分"
+    },
+    {
+     "n": "03",
+     "title": "要精确十进制，用 Decimal",
+     "note": "在足够精度下，Decimal('0.1') + Decimal('0.2') 等于 Decimal('0.3')。",
+     "code": "Decimal('0.1')"
+    }
+   ],
+   "foot": "浮点适合科学计算，不适合精确账本。",
+   "footer": "Python docs · math.isclose / decimal",
+   "footnote": "RULES OF THUMB",
+   "claim": true,
+   "sources": [
+    "c6",
+    "c8"
+   ],
+   "narration": [
+    {
+     "caption": "比较小数，别用等号。",
+     "tts": "比较小数，别用等号。",
+     "mark": "r0"
+    },
+    {
+     "caption": "金额用整数分。",
+     "tts": "金额用整数分。",
+     "mark": "r1"
+    },
+    {
+     "caption": "要精确十进制，用 Decimal。",
+     "tts": "要精确十进制，用 Decimal。",
+     "mark": "r2"
+    },
+    {
+     "caption": "浮点适合计算，不适合账本。",
+     "tts": "浮点适合计算，不适合账本。",
+     "mark": "foot",
+     "pause": 0.35
+    }
+   ]
+  },
+  {
+   "id": "outro",
+   "type": "outro",
+   "chapter": "下期",
+   "kicker": "留一个问题",
+   "questionLines": [
+    "那 0.1 在内存里，",
+    "到底长什么样？"
+   ],
+   "next": "下一期 · 拆开 64 个格子",
+   "teaser": "float.hex(0.1)",
+   "teaserValue": "0x1.999999999999ap-4",
+   "sources": [
+    "IEEE 754-2019",
+    "Goldberg 1991",
+    "Python Docs"
+   ],
+   "footer": "",
+   "footnote": "",
+   "claim": false,
+   "narration": [
+    {
+     "caption": "浮点数不是不准。",
+     "tts": "浮点数不是不准。",
+     "mark": "q0"
+    },
+    {
+     "caption": "它只是在用固定位数逼近无限。",
+     "tts": "它只是在用固定位数逼近无限。",
+     "mark": "q1"
+    },
+    {
+     "caption": "下期，拆开这 64 个格子。",
+     "tts": "下期，拆开这六十四个格子。",
+     "mark": "next",
+     "pause": 0.5
+    }
+   ]
+  }
+ ]
+}

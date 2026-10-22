@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=1920, height=1080"><title>bitfield · 为什么 0.1 + 0.2 不等于 0.3</title></head>
+<body>
+<template>
+<style>
+
+#root{
+  --bg:#070b14;--bg2:#0b1424;--panel:#0d1728;--panel2:#111d31;
+  --ink:#f2f5fa;--muted:#a7b6c9;--faint:#7d8fa8;--line:#22334d;
+  --cyan:#5eead4;--blue:#60a5fa;--amber:#fbbf24;--coral:#fb7185;--green:#34d399;
+  --paper:#f4f0e6;--paper-ink:#111820;--paper-muted:#586170;
+  --display:"Space Grotesk","Noto Sans SC",sans-serif;--body:"Noto Sans SC",sans-serif;--mono:"JetBrains Mono","Noto Sans SC",monospace;
+  position:absolute;inset:0;overflow:hidden;background:var(--bg);color:var(--ink);
+  font-family:var(--body);-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;
+}
+#root *{box-sizing:border-box}
+.scene{position:absolute;inset:0;overflow:hidden;padding:0 120px}
+.grid-bg{position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(96,165,250,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.055) 1px,transparent 1px);
+  background-size:80px 80px;mask-image:radial-gradient(ellipse at 50% 45%,#000 25%,transparent 78%)}
+.grid-bg.fine{background-size:32px 32px;opacity:.55}
+.glow{position:absolute;width:1100px;height:1100px;border-radius:50%;pointer-events:none;filter:blur(10px);
+  background:radial-gradient(circle,rgba(94,234,212,.10),rgba(96,165,250,.05) 42%,transparent 68%)}
+.vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,transparent 42%,rgba(0,0,0,.55) 100%)}
+.scan{position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4px)}
+.topbar{position:absolute;top:52px;left:120px;right:120px;display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--mono);font-size:24px;letter-spacing:.08em;color:var(--muted);z-index:20}
+.brand{display:flex;align-items:center;gap:16px}
+.brand-mark{width:12px;height:12px;background:var(--cyan);box-shadow:0 0 18px rgba(94,234,212,.8)}
+.chapter{display:flex;align-items:center;gap:12px;color:var(--faint)}
+.chapter b{color:var(--ink);font-weight:500}
+.chapter .dot{width:8px;height:8px;border-radius:50%;background:var(--amber)}
+.foot{position:absolute;left:120px;right:120px;bottom:154px;display:flex;justify-content:space-between;align-items:flex-end;
+  font-family:var(--mono);font-size:21px;line-height:1.5;color:var(--faint);z-index:20;letter-spacing:.01em}
+.foot .src{max-width:1180px}
+.foot b{color:var(--muted);font-weight:500}
+.kicker{font-family:var(--mono);font-size:28px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:16px}
+.kicker::before{content:"";width:54px;height:2px;background:var(--cyan);display:block}
+.h1{font-family:var(--body);font-weight:800;font-size:76px;line-height:1.16;letter-spacing:-.02em;margin:0}
+.h1 em{font-style:normal;color:var(--cyan)}
+.mono{font-family:var(--mono)}
+.reveal{opacity:0}
+.hairline{height:1px;background:var(--line)}
+.chip{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border:1px solid var(--line);border-radius:999px;
+  font-family:var(--mono);font-size:22px;color:var(--muted);background:rgba(13,23,40,.72)}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.noise{position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E")}
+
+
+.stage{position:absolute;left:120px;right:120px;top:156px;bottom:150px;display:flex;flex-direction:column;justify-content:center}
+.stage.top{justify-content:flex-start}
+.stage-head{display:flex;flex-direction:column;gap:18px;margin-bottom:40px}
+.stage-title{font-size:62px;line-height:1.16;font-weight:800;letter-spacing:-.02em;margin:0;max-width:1500px}
+.stage-title em{font-style:normal;color:var(--cyan)}
+.tone-cyan{color:var(--cyan)!important}.tone-blue{color:var(--blue)!important}.tone-amber{color:var(--amber)!important}
+.tone-coral{color:var(--coral)!important}.tone-green{color:var(--green)!important}.tone-muted{color:var(--muted)!important}
+
+.bf-bar{display:flex;gap:6px;height:152px;width:100%;margin-top:8px}
+.bf-seg{height:100%;border-radius:6px;position:relative;display:flex;align-items:center;justify-content:center;gap:14px;overflow:hidden;transform-origin:left center;border:1px solid rgba(255,255,255,.12)}
+.bf-seg.bg-amber{background:linear-gradient(180deg,rgba(251,191,36,.88),rgba(180,120,10,.72))}
+.bf-seg.bg-cyan{background:linear-gradient(180deg,rgba(94,234,212,.78),rgba(20,130,120,.55))}
+.bf-seg.bg-blue{background:linear-gradient(180deg,rgba(96,165,250,.75),rgba(30,80,170,.55))}
+.bf-count{font-family:var(--mono);font-size:56px;font-weight:700;color:#f8fafc;letter-spacing:-.04em}
+.bf-name{font-size:24px;font-weight:700;color:rgba(248,250,252,.88)}
+.bf-seg:first-child{border-radius:6px 2px 2px 6px}
+.bf-seg:first-child .bf-count{font-size:24px;color:#2a1a00}
+.bf-legend{display:flex;gap:40px;margin-top:24px;align-items:baseline}
+.bf-leg{display:flex;align-items:baseline;gap:10px;font-size:20px;color:var(--muted);white-space:nowrap}
+.bf-leg i{width:12px;height:12px;border-radius:3px;flex:0 0 12px}
+.bf-leg i.bg-amber{background:var(--amber)}.bf-leg i.bg-cyan{background:var(--cyan)}.bf-leg i.bg-blue{background:var(--blue)}
+.bf-leg b{color:var(--ink);font-weight:700}
+.bf-leg span{font-family:var(--mono);font-size:18px;color:var(--faint)}
+.bf-leg em{font-style:normal;font-size:18px;color:var(--faint);margin-left:2px}
+.bf-readout{margin-top:44px;border-top:1px solid var(--line);padding-top:26px}
+.bf-readout-head{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:20px;color:var(--muted);letter-spacing:.06em}
+.bf-readout-head b{color:var(--amber);font-weight:500}
+.bf-bitline{margin-top:18px;font-family:var(--mono);font-size:25px;line-height:1.4;white-space:nowrap;letter-spacing:.06em}
+.bf-bit{opacity:.92}
+.bf-bit.bg-amber{color:var(--amber)}.bf-bit.bg-cyan{color:var(--cyan)}.bf-bit.bg-blue{color:var(--blue)}
+.bf-bit.bit-gap{margin-left:12px}
+.bf-note{margin-top:20px;font-size:25px;color:var(--ink)}
+
+[data-reveal],[data-intro]{opacity:0}
+</style>
+<div id="root" data-composition-id="bitfield" data-width="1920" data-height="1080">
+<div class="scene scene-bitfield">
+  <div class="grid-bg fine"></div>
+  <div class="glow" style="left:-260px;top:-420px"></div>
+  <div class="vignette"></div>
+  <div class="scan"></div>
+  <div class="noise"></div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-mark"></span><span>CS / 04</span></div>
+    <div class="chapter"><span class="dot"></span><span>编码</span><b>04 / 08</b></div>
+  </div>
+  <div class="foot"><div class="src">IEEE 754-2019 · binary64</div><div>0.1 = 0x1.999999999999ap-4</div></div>
+  <div class="stage top">
+    <div class="stage-head">
+      <div class="kicker" data-intro>拆开一个 double</div>
+      <h2 class="stage-title" data-intro>64 位里，只有 53 位存有效数字</h2>
+    </div>
+    <div class="bf-bar" data-intro><div class="bf-seg tone-amber bg-amber" style="width:1.563%" data-reveal="b0" data-anim="grow-x">
+      <span class="bf-count">1</span>
+    </div><div class="bf-seg tone-cyan bg-cyan" style="width:17.188%" data-reveal="b1" data-anim="grow-x">
+      <span class="bf-count">11</span><span class="bf-name">指数</span>
+    </div><div class="bf-seg tone-blue bg-blue" style="width:81.250%" data-reveal="b2" data-anim="grow-x">
+      <span class="bf-count">52</span><span class="bf-name">尾数</span>
+    </div></div>
+    <div class="bf-legend" data-intro><div class="bf-leg"><i class="bg-amber"></i><b>符号</b><span>1 位</span><em>0 正 / 1 负</em></div><div class="bf-leg"><i class="bg-cyan"></i><b>指数</b><span>11 位</span><em>偏置 1023</em></div><div class="bf-leg"><i class="bg-blue"></i><b>尾数</b><span>52 位</span><em>隐含最高位 1</em></div></div>
+    <div class="bf-readout" data-reveal="bits">
+      <div class="bf-readout-head"><span>0.1 的 binary64 位模式</span><b>0x3FB999999999999A</b></div>
+      <div class="bf-bitline"><span class="bf-bit bg-amber">0</span><span class="bf-bit bg-cyan">0</span><span class="bf-bit bg-cyan">1</span><span class="bf-bit bg-cyan">1</span><span class="bf-bit bg-cyan bit-gap">1</span><span class="bf-bit bg-cyan">1</span><span class="bf-bit bg-cyan">1</span><span class="bf-bit bg-cyan">1</span><span class="bf-bit bg-cyan bit-gap">1</span><span class="bf-bit bg-cyan">0</span><span class="bf-bit bg-cyan">1</span><span class="bf-bit bg-cyan">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue bit-gap">1</span><span class="bf-bit bg-blue">0</span><span class="bf-bit bg-blue">1</span><span class="bf-bit bg-blue">0</span></div>
+      <div class="bf-note">52 位尾数 + 1 位隐含的 1 = 53 位有效数字。</div>
+    </div>
+  </div></div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const ID = "bitfield";
+const FIRST = false;
+if (FIRST) { gsap.set("[data-reveal], [data-intro]", { opacity: 1 }); }
+animate("[data-reveal~=\"b0\"]", 0.200);
+animate("[data-reveal~=\"b1\"]", 3.315);
+animate("[data-reveal~=\"b2\"]", 7.080);
+animate("[data-reveal~=\"bits\"]", 9.082);
+animate("[data-intro]", 0.06, true);
+if (!FIRST) { gsap.utils.toArray("[data-reveal]").forEach((el) => { if (Number(el.dataset.shown || 0) === 0) { el.dataset.shown = "1"; gsap.set(el, { opacity: 1 }); } }); }
+
+function animate(selector, at, intro) {
+  const els = gsap.utils.toArray(selector);
+  els.forEach((el, i) => {
+    if (el.dataset.shown === "1") return;
+    el.dataset.shown = "1";
+    const anim = el.dataset.anim || "";
+    const delay = at + i * 0.055;
+    if (FIRST) {
+      if (anim === "grow-x") tl.fromTo(el, { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: "power3.inOut" }, delay);
+      else if (anim === "pulse") tl.fromTo(el, { scale: 1.035 }, { scale: 1, duration: 0.6, ease: "power3.out" }, delay);
+      else tl.fromTo(el, { y: 14, opacity: 1 }, { y: 0, opacity: 1, duration: 0.62, ease: "power3.out" }, delay);
+      return;
+    }
+    if (anim === "grow-x") {
+      tl.fromTo(el, { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.85, ease: "power3.inOut" }, delay);
+    } else if (anim === "pulse") {
+      tl.fromTo(el, { scale: 0.94, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.55, ease: "power3.out" }, delay);
+    } else if (anim === "type") {
+      tl.fromTo(el, { clipPath: "inset(0 100% 0 0)", opacity: 1 }, { clipPath: "inset(0 0% 0 0)", duration: 0.5 + Math.min(0.8, (el.textContent || "").length * 0.018), ease: "steps(24)" }, delay);
+    } else if (anim === "stamp") {
+      tl.fromTo(el, { scale: 1.35, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.55, ease: "back.out(1.8)" }, delay);
+    } else if (anim === "wipe") {
+      tl.fromTo(el, { clipPath: "inset(0 100% 0 0)", opacity: 1 }, { clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "power3.inOut" }, delay);
+    } else if (intro) {
+      // Intro chrome is already visible at the cut; move it, don't fade it in from black.
+      tl.fromTo(el, { opacity: 1, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, delay);
+    } else {
+      tl.fromTo(el, { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.62, ease: "power3.out" }, delay);
+    }
+  });
+}
+
+// Slow, finite background drift. Never uses a render-time clock or Math.random.
+const drift = 11.694;
+gsap.utils.toArray("[data-float]").forEach((el, i) => {
+  const cycle = 5.2;
+  const repeats = Math.max(0, Math.floor(drift / cycle) - 1);
+  tl.to(el, { y: i % 2 ? 10 : -10, duration: cycle / 2, ease: "sine.inOut", yoyo: true, repeat: repeats * 2 }, 0.2);
+});
+window.__timelines[ID] = tl;
+
+</script>
+</template>
+</body>
+</html>

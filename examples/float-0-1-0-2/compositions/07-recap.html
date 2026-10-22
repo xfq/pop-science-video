@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=1920, height=1080"><title>recap · 为什么 0.1 + 0.2 不等于 0.3</title></head>
+<body>
+<template>
+<style>
+
+#root{
+  --bg:#070b14;--bg2:#0b1424;--panel:#0d1728;--panel2:#111d31;
+  --ink:#f2f5fa;--muted:#a7b6c9;--faint:#7d8fa8;--line:#22334d;
+  --cyan:#5eead4;--blue:#60a5fa;--amber:#fbbf24;--coral:#fb7185;--green:#34d399;
+  --paper:#f4f0e6;--paper-ink:#111820;--paper-muted:#586170;
+  --display:"Space Grotesk","Noto Sans SC",sans-serif;--body:"Noto Sans SC",sans-serif;--mono:"JetBrains Mono","Noto Sans SC",monospace;
+  position:absolute;inset:0;overflow:hidden;background:var(--bg);color:var(--ink);
+  font-family:var(--body);-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;
+}
+#root *{box-sizing:border-box}
+.scene{position:absolute;inset:0;overflow:hidden;padding:0 120px}
+.grid-bg{position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(96,165,250,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.055) 1px,transparent 1px);
+  background-size:80px 80px;mask-image:radial-gradient(ellipse at 50% 45%,#000 25%,transparent 78%)}
+.grid-bg.fine{background-size:32px 32px;opacity:.55}
+.glow{position:absolute;width:1100px;height:1100px;border-radius:50%;pointer-events:none;filter:blur(10px);
+  background:radial-gradient(circle,rgba(94,234,212,.10),rgba(96,165,250,.05) 42%,transparent 68%)}
+.vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,transparent 42%,rgba(0,0,0,.55) 100%)}
+.scan{position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4px)}
+.topbar{position:absolute;top:52px;left:120px;right:120px;display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--mono);font-size:24px;letter-spacing:.08em;color:var(--muted);z-index:20}
+.brand{display:flex;align-items:center;gap:16px}
+.brand-mark{width:12px;height:12px;background:var(--cyan);box-shadow:0 0 18px rgba(94,234,212,.8)}
+.chapter{display:flex;align-items:center;gap:12px;color:var(--faint)}
+.chapter b{color:var(--ink);font-weight:500}
+.chapter .dot{width:8px;height:8px;border-radius:50%;background:var(--amber)}
+.foot{position:absolute;left:120px;right:120px;bottom:154px;display:flex;justify-content:space-between;align-items:flex-end;
+  font-family:var(--mono);font-size:21px;line-height:1.5;color:var(--faint);z-index:20;letter-spacing:.01em}
+.foot .src{max-width:1180px}
+.foot b{color:var(--muted);font-weight:500}
+.kicker{font-family:var(--mono);font-size:28px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:16px}
+.kicker::before{content:"";width:54px;height:2px;background:var(--cyan);display:block}
+.h1{font-family:var(--body);font-weight:800;font-size:76px;line-height:1.16;letter-spacing:-.02em;margin:0}
+.h1 em{font-style:normal;color:var(--cyan)}
+.mono{font-family:var(--mono)}
+.reveal{opacity:0}
+.hairline{height:1px;background:var(--line)}
+.chip{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border:1px solid var(--line);border-radius:999px;
+  font-family:var(--mono);font-size:22px;color:var(--muted);background:rgba(13,23,40,.72)}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.noise{position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E")}
+
+
+.stage{position:absolute;left:120px;right:120px;top:156px;bottom:150px;display:flex;flex-direction:column;justify-content:center}
+.stage.top{justify-content:flex-start}
+.stage-head{display:flex;flex-direction:column;gap:18px;margin-bottom:40px}
+.stage-title{font-size:62px;line-height:1.16;font-weight:800;letter-spacing:-.02em;margin:0;max-width:1500px}
+.stage-title em{font-style:normal;color:var(--cyan)}
+.tone-cyan{color:var(--cyan)!important}.tone-blue{color:var(--blue)!important}.tone-amber{color:var(--amber)!important}
+.tone-coral{color:var(--coral)!important}.tone-green{color:var(--green)!important}.tone-muted{color:var(--muted)!important}
+
+.rec-list{display:flex;flex-direction:column;gap:16px;margin-top:4px}
+.rec-row{display:grid;grid-template-columns:86px 1fr auto;gap:28px;align-items:center;min-height:150px;border-top:1px solid var(--line);padding:18px 6px}
+.rec-row:last-child{border-bottom:1px solid var(--line)}
+.rec-num{font-family:var(--mono);font-size:26px;color:var(--cyan);letter-spacing:.06em}
+.rec-title{font-size:40px;font-weight:800;line-height:1.32;letter-spacing:-.01em}
+.rec-note{font-size:23px;line-height:1.55;color:var(--muted);margin-top:8px}
+.rec-code{font-family:var(--mono);font-size:21px;color:var(--amber);background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.24);padding:14px 18px;border-radius:6px;max-width:520px;line-height:1.5}
+.rec-foot{margin-top:30px;font-size:29px;color:var(--ink)}
+.rec-foot::before{content:"";display:inline-block;width:9px;height:9px;background:var(--green);margin-right:14px;vertical-align:middle}
+
+[data-reveal],[data-intro]{opacity:0}
+</style>
+<div id="root" data-composition-id="recap" data-width="1920" data-height="1080">
+<div class="scene scene-recap">
+  <div class="grid-bg fine"></div>
+  <div class="glow" style="left:-260px;top:-420px"></div>
+  <div class="vignette"></div>
+  <div class="scan"></div>
+  <div class="noise"></div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-mark"></span><span>CS / 07</span></div>
+    <div class="chapter"><span class="dot"></span><span>小结</span><b>07 / 08</b></div>
+  </div>
+  <div class="foot"><div class="src">Python docs · math.isclose / decimal</div><div>RULES OF THUMB</div></div>
+  <div class="stage top">
+    <div class="stage-head"><div class="kicker" data-intro>带走三件事</div><h2 class="stage-title" data-intro>下次写代码，记住这三条</h2></div>
+    <div class="rec-list" data-intro>
+    <div class="rec-row" data-reveal="r0">
+      <div class="rec-num">01</div>
+      <div class="rec-main">
+        <div class="rec-title">比较小数，别用等号</div>
+        <div class="rec-note">用 math.isclose(a, b)，或者自己给一个容差。</div>
+      </div>
+      <div class="rec-code">math.isclose(a, b)</div>
+    </div>
+    <div class="rec-row" data-reveal="r1">
+      <div class="rec-num">02</div>
+      <div class="rec-main">
+        <div class="rec-title">金额用整数分</div>
+        <div class="rec-note">10.25 元存成 1025 分，只在显示时除以 100。</div>
+      </div>
+      <div class="rec-code">1025  # 分</div>
+    </div>
+    <div class="rec-row" data-reveal="r2">
+      <div class="rec-num">03</div>
+      <div class="rec-main">
+        <div class="rec-title">要精确十进制，用 Decimal</div>
+        <div class="rec-note">在足够精度下，Decimal('0.1') + Decimal('0.2') 等于 Decimal('0.3')。</div>
+      </div>
+      <div class="rec-code">Decimal('0.1')</div>
+    </div></div>
+    <div class="rec-foot" data-reveal="foot">浮点适合科学计算，不适合精确账本。</div>
+  </div></div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const ID = "recap";
+const FIRST = false;
+if (FIRST) { gsap.set("[data-reveal], [data-intro]", { opacity: 1 }); }
+animate("[data-reveal~=\"r0\"]", 0.200);
+animate("[data-reveal~=\"r1\"]", 2.480);
+animate("[data-reveal~=\"r2\"]", 4.024);
+animate("[data-reveal~=\"foot\"]", 6.657);
+animate("[data-intro]", 0.06, true);
+if (!FIRST) { gsap.utils.toArray("[data-reveal]").forEach((el) => { if (Number(el.dataset.shown || 0) === 0) { el.dataset.shown = "1"; gsap.set(el, { opacity: 1 }); } }); }
+
+function animate(selector, at, intro) {
+  const els = gsap.utils.toArray(selector);
+  els.forEach((el, i) => {
+    if (el.dataset.shown === "1") return;
+    el.dataset.shown = "1";
+    const anim = el.dataset.anim || "";
+    const delay = at + i * 0.055;
+    if (FIRST) {
+      if (anim === "grow-x") tl.fromTo(el, { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: "power3.inOut" }, delay);
+      else if (anim === "pulse") tl.fromTo(el, { scale: 1.035 }, { scale: 1, duration: 0.6, ease: "power3.out" }, delay);
+      else tl.fromTo(el, { y: 14, opacity: 1 }, { y: 0, opacity: 1, duration: 0.62, ease: "power3.out" }, delay);
+      return;
+    }
+    if (anim === "grow-x") {
+      tl.fromTo(el, { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.85, ease: "power3.inOut" }, delay);
+    } else if (anim === "pulse") {
+      tl.fromTo(el, { scale: 0.94, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.55, ease: "power3.out" }, delay);
+    } else if (anim === "type") {
+      tl.fromTo(el, { clipPath: "inset(0 100% 0 0)", opacity: 1 }, { clipPath: "inset(0 0% 0 0)", duration: 0.5 + Math.min(0.8, (el.textContent || "").length * 0.018), ease: "steps(24)" }, delay);
+    } else if (anim === "stamp") {
+      tl.fromTo(el, { scale: 1.35, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.55, ease: "back.out(1.8)" }, delay);
+    } else if (anim === "wipe") {
+      tl.fromTo(el, { clipPath: "inset(0 100% 0 0)", opacity: 1 }, { clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "power3.inOut" }, delay);
+    } else if (intro) {
+      // Intro chrome is already visible at the cut; move it, don't fade it in from black.
+      tl.fromTo(el, { opacity: 1, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, delay);
+    } else {
+      tl.fromTo(el, { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.62, ease: "power3.out" }, delay);
+    }
+  });
+}
+
+// Slow, finite background drift. Never uses a render-time clock or Math.random.
+const drift = 9.663;
+gsap.utils.toArray("[data-float]").forEach((el, i) => {
+  const cycle = 5.2;
+  const repeats = Math.max(0, Math.floor(drift / cycle) - 1);
+  tl.to(el, { y: i % 2 ? 10 : -10, duration: cycle / 2, ease: "sine.inOut", yoyo: true, repeat: repeats * 2 }, 0.2);
+});
+window.__timelines[ID] = tl;
+
+</script>
+</template>
+</body>
+</html>

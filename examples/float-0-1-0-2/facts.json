@@ -1,0 +1,119 @@
+{
+ "claims": [
+  {
+   "id": "c1",
+   "claim": "在 IEEE 754 binary64 中，0.1 + 0.2 的求值结果是 0.30000000000000004；Python、JavaScript、C、Java 的实机输出一致。",
+   "status": "verified",
+   "sources": [
+    {"title": "Python 3 documentation — Floating Point Arithmetic: Issues and Limitations", "url": "https://docs.python.org/3/tutorial/floatingpoint.html", "kind": "primary", "accessed": "2026-10-21"},
+    {"title": "IEEE 754-2019 Standard for Floating-Point Arithmetic", "url": "https://standards.ieee.org/ieee/754/6210/", "kind": "primary", "accessed": "2026-10-21"}
+   ],
+   "verification": "Ran Python 3.14, Node v24, cc and java on this machine: all four returned 0.30000000000000004 and false for == 0.3. Outputs in evidence/verification.txt.",
+   "caveat": "binary64 / double precision. binary32 gives a different printed result."
+  },
+  {
+   "id": "c2",
+   "claim": "0.1 不能表示为有限的二进制小数；binary64 中存下的 0.1 是 0.1000000000000000055511151231257827021181583404541015625。",
+   "status": "verified",
+   "sources": [
+    {"title": "Goldberg, What Every Computer Scientist Should Know About Floating-Point Arithmetic (1991)", "url": "https://dl.acm.org/doi/10.1145/103162.103163", "kind": "primary", "accessed": "2026-10-21"},
+    {"title": "Python 3 documentation — Floating Point Arithmetic", "url": "https://docs.python.org/3/tutorial/floatingpoint.html", "kind": "primary", "accessed": "2026-10-21"}
+   ],
+   "verification": "Printed the exact stored value with Python's Decimal(0.1) and compared to the documented binary expansion.",
+   "caveat": "The decimal expansion is exact for the stored double, not for mathematical 0.1."
+  },
+  {
+   "id": "c3",
+   "claim": "binary64 使用 1 位符号、11 位指数、52 位存储尾数；加上隐含的最高位 1，有效数字共 53 位。",
+   "status": "verified",
+   "sources": [
+    {"title": "IEEE 754-2019 Standard for Floating-Point Arithmetic", "url": "https://standards.ieee.org/ieee/754/6210/", "kind": "primary", "accessed": "2026-10-21"},
+    {"title": "Python 3 documentation — Floating Point Arithmetic", "url": "https://docs.python.org/3/tutorial/floatingpoint.html", "kind": "primary", "accessed": "2026-10-21"}
+   ],
+   "verification": "Cross-checked the field widths and the implicit leading bit against the IEEE 754 binary64 format description.",
+   "caveat": "Subnormals do not have the same implicit leading 1; 0.1 is normal."
+  },
+  {
+   "id": "c4",
+   "claim": "0.1 的二进制展开以 0011 为循环节：0.0001100110011…₂。",
+   "status": "verified",
+   "sources": [
+    {"title": "Goldberg, What Every Computer Scientist Should Know About Floating-Point Arithmetic (1991)", "url": "https://dl.acm.org/doi/10.1145/103162.103163", "kind": "primary", "accessed": "2026-10-21"}
+   ],
+   "verification": "Long division of 1/10 in base 2 reaches the repeating remainder 0110; the first digits are 0.0001100110011….",
+   "caveat": "The stored value is a rounded truncation of this infinite expansion."
+  },
+  {
+   "id": "c5",
+   "claim": "Python 的 (0.1).hex() 输出 '0x1.999999999999ap-4'。",
+   "status": "verified",
+   "sources": [
+    {"title": "Python 3 documentation — float.hex()", "url": "https://docs.python.org/3/library/stdtypes.html#float.hex", "kind": "primary", "accessed": "2026-10-21"}
+   ],
+   "verification": "Ran the exact expression in Python 3.14 on this machine; output recorded in evidence/verification.txt.",
+   "caveat": "Python's shortest repr and hex() expose the same stored double in different forms."
+  },
+  {
+   "id": "c6",
+   "claim": "math.isclose 的默认相对容差是 1e-09。",
+   "status": "verified",
+   "sources": [
+    {"title": "Python 3 documentation — math.isclose", "url": "https://docs.python.org/3/library/math.html#math.isclose", "kind": "primary", "accessed": "2026-10-21"}
+   ],
+   "verification": "Read the documented default rel_tol=1e-09 and ran math.isclose(0.1 + 0.2, 0.3) -> True.",
+   "caveat": "isclose is not a universal equality test; choose a tolerance that matches the domain."
+  },
+  {
+   "id": "c7",
+   "claim": "0.30000000000000004 − 0.3 = 5.551115123125783e-17，约等于该量级上的 1 个 ulp。",
+   "status": "verified",
+   "sources": [
+    {"title": "IEEE 754-2019 Standard for Floating-Point Arithmetic", "url": "https://standards.ieee.org/ieee/754/6210/", "kind": "primary", "accessed": "2026-10-21"}
+   ],
+   "verification": "Computed the subtraction in Python and compared it with the spacing of binary64 numbers near 0.3 (2^-54).",
+   "caveat": "1 ulp is a local unit; its absolute size depends on the exponent."
+  },
+  {
+   "id": "c8",
+   "claim": "在默认 28 位十进制精度的上下文里，Decimal('0.1') + Decimal('0.2') 等于 Decimal('0.3')。",
+   "status": "verified",
+   "sources": [
+    {"title": "Python 3 documentation — decimal module", "url": "https://docs.python.org/3/library/decimal.html", "kind": "primary", "accessed": "2026-10-21"}
+   ],
+   "verification": "Ran Decimal('0.1') + Decimal('0.2') == Decimal('0.3') -> True with default context.",
+   "caveat": "Decimal arithmetic still has a finite context precision; it is not symbolic mathematics."
+  },
+  {
+   "id": "c9",
+   "claim": "Python、JavaScript、C、Java 在各自默认的 IEEE 754 binary64 下得到相同的 0.30000000000000004。",
+   "status": "verified",
+   "sources": [
+    {"title": "IEEE 754-2019 Standard for Floating-Point Arithmetic", "url": "https://standards.ieee.org/ieee/754/6210/", "kind": "primary", "accessed": "2026-10-21"}
+   ],
+   "verification": "Ran equivalent programs in Python 3.14, Node v24, C (cc) and Java on this machine; all printed 0.30000000000000004 and false for equality with 0.3.",
+   "caveat": "Some languages or build flags may use extended precision or binary32; the claim is about the default binary64 path."
+  },
+  {
+   "id": "c10",
+   "claim": "53 位二进制有效数字大约对应 15–17 位十进制有效数字。",
+   "status": "verified",
+   "sources": [
+    {"title": "Python 3 documentation — Floating Point Arithmetic", "url": "https://docs.python.org/3/tutorial/floatingpoint.html", "kind": "primary", "accessed": "2026-10-21"}
+   ],
+   "verification": "53 * log10(2) ≈ 15.95; the Python tutorial describes binary64 as 53 bits of precision, about 15–17 decimal digits.",
+   "caveat": "The exact number of reliable decimal digits depends on the value and the direction of rounding."
+  }
+ ],
+ "analogies": [
+  {
+   "text": "像一把刻度固定的小数尺，只能量到有限的格子。",
+   "maps": "尾数只有 52 位存储位，加上隐含的 1 共 53 位有效数字。",
+   "breaks": "浮点数不是固定小数点：指数会让格子的绝对间距随数量级变化，所以它更像一把可以缩放的尺。"
+  },
+  {
+   "text": "像一本只有 53 行的记事本，写不下的部分只能四舍五入。",
+   "maps": "每次存储和运算都要把结果舍入到最近的可表示值。",
+   "breaks": "记事本的比喻暗示“写满就停”，而浮点还会用指数移动小数点；舍入规则也是 ties-to-even，不是简单的四舍五入。"
+  }
+ ]
+}

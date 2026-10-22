@@ -1,0 +1,4 @@
+interface:
+  display_name: "科普视频 skill"
+  short_description: "把一个概念做成科普视频：事实台账、叙事、代码生成图示、旁白、原创配乐与渲染"
+  default_prompt: "请使用 $pop-science-video，把这个概念做成一支 90 秒中文横版科普片：先给我事实、叙事角度和镜头表，我确认后再配音和渲染。"

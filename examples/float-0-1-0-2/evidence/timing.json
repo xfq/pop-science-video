@@ -1,0 +1,50 @@
+{
+ "duration": 100.524,
+ "target": 99.0,
+ "fps": 30,
+ "estimated": false,
+ "scenes": [
+  {
+   "id": "hook",
+   "start": 0.0,
+   "duration": 13.831
+  },
+  {
+   "id": "pivot",
+   "start": 13.851,
+   "duration": 8.394
+  },
+  {
+   "id": "pipeline",
+   "start": 22.265,
+   "duration": 18.319
+  },
+  {
+   "id": "bitfield",
+   "start": 40.604,
+   "duration": 12.294
+  },
+  {
+   "id": "code",
+   "start": 52.918,
+   "duration": 18.698
+  },
+  {
+   "id": "numbers",
+   "start": 71.636,
+   "duration": 10.035
+  },
+  {
+   "id": "recap",
+   "start": 81.691,
+   "duration": 10.263
+  },
+  {
+   "id": "outro",
+   "start": 91.974,
+   "duration": 8.55
+  }
+ ],
+ "speechSeconds": 83.94,
+ "captions": 34
+}

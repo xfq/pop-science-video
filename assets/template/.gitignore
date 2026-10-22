@@ -1,0 +1,14 @@
+node_modules/
+.hyperframes/
+renders/
+stills/
+assets/mix.wav
+assets/music.wav
+assets/tts/
+audio-chunks/
+
+recording/takes/*
+!recording/takes/.gitkeep
+recording/guide/
+recording/auditions/
+recording/import-report.json

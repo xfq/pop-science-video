@@ -1,0 +1,22 @@
+{
+ "text": "如果我问你，零点一加零点二等于多少？",
+ "rate": 190,
+ "voices": [
+  {
+   "voice": "Tingting",
+   "file": "recording/auditions/Tingting.wav"
+  },
+  {
+   "voice": "Meijia",
+   "file": "recording/auditions/Meijia.wav"
+  },
+  {
+   "voice": "Flo (Chinese (China mainland))",
+   "file": "recording/auditions/Flo-(Chinese-(China-mainland)).wav"
+  },
+  {
+   "voice": "Reed (Chinese (China mainland))",
+   "file": "recording/auditions/Reed-(Chinese-(China-mainland)).wav"
+  }
+ ]
+}

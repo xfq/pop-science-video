@@ -1,0 +1,71 @@
+{
+  "title": "为什么 0.1 + 0.2 不等于 0.3",
+  "duration": 100.524,
+  "fps": 30,
+  "size": [
+    1920,
+    1080
+  ],
+  "estimatedTimeline": false,
+  "audio": "assets/mix.wav",
+  "captions": 34,
+  "scenes": [
+    {
+      "id": "hook",
+      "file": "01-hook.html",
+      "type": "hook",
+      "start": 0,
+      "duration": 13.831
+    },
+    {
+      "id": "pivot",
+      "file": "02-pivot.html",
+      "type": "statement",
+      "start": 13.851,
+      "duration": 8.394
+    },
+    {
+      "id": "pipeline",
+      "file": "03-pipeline.html",
+      "type": "pipeline",
+      "start": 22.265,
+      "duration": 18.319
+    },
+    {
+      "id": "bitfield",
+      "file": "04-bitfield.html",
+      "type": "bitfield",
+      "start": 40.604,
+      "duration": 12.294
+    },
+    {
+      "id": "code",
+      "file": "05-code.html",
+      "type": "code",
+      "start": 52.918,
+      "duration": 18.698
+    },
+    {
+      "id": "numbers",
+      "file": "06-numbers.html",
+      "type": "numbers",
+      "start": 71.636,
+      "duration": 10.035
+    },
+    {
+      "id": "recap",
+      "file": "07-recap.html",
+      "type": "recap",
+      "start": 81.691,
+      "duration": 10.263
+    },
+    {
+      "id": "outro",
+      "file": "08-outro.html",
+      "type": "outro",
+      "start": 91.974,
+      "duration": 8.55
+    }
+  ],
+  "warnings": []
+}

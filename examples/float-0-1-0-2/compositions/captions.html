@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"></head><body><template>
+<style>
+@font-face{font-family:"Noto Sans SC";src:url("./assets/fonts/NotoSansSC.woff2") format("woff2");font-weight:100 900;font-display:block}
+#root{position:absolute;inset:0;pointer-events:none;font-family:"Noto Sans SC",sans-serif}
+.cap{position:absolute;left:50%;bottom:48px;transform:translateX(-50%);max-width:1480px;padding:12px 26px 13px;
+  background:rgba(3,8,16,.88);border:1px solid rgba(148,163,184,.22);border-radius:10px;
+  color:#f8fafc;font-size:33px;line-height:1.42;text-align:center;opacity:0;letter-spacing:.01em;white-space:normal;width:max-content}
+.cap::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;background:#5eead4;border-radius:2px}
+</style>
+<div id="root" data-composition-id="captions" data-width="1920" data-height="1080">
+<div class="cap" id="cap-0">如果我问你：0.1 加 0.2 等于多少？</div>
+<div class="cap" id="cap-1">你大概会说：0.3 啊。</div>
+<div class="cap" id="cap-2">但计算机给出的是 0.30000000000000004。</div>
+<div class="cap" id="cap-3">这不是 bug。</div>
+<div class="cap" id="cap-4">这不是 bug，也不是 Python 的锅。</div>
+<div class="cap" id="cap-5">是二进制。</div>
+<div class="cap" id="cap-6">换 JavaScript、C、Java，结果都一样。</div>
+<div class="cap" id="cap-7">0.1 在二进制里无限循环。</div>
+<div class="cap" id="cap-8">一个 double 只留 53 位。</div>
+<div class="cap" id="cap-9">多出来的部分，舍入到最近的 53 位。</div>
+<div class="cap" id="cap-10">存进去的 0.1 已不再精确。</div>
+<div class="cap" id="cap-11">相加，再舍入一次。</div>
+<div class="cap" id="cap-12">误差从输入就开始了。</div>
+<div class="cap" id="cap-13">一个 double 占 64 位。</div>
+<div class="cap" id="cap-14">符号 1 位，指数 11 位，尾数 52 位。</div>
+<div class="cap" id="cap-15">尾数前面隐含一个 1。</div>
+<div class="cap" id="cap-16">所以有效数字是 53 位。</div>
+<div class="cap" id="cap-17">在 Python 里，0.1 的真实值长这样。</div>
+<div class="cap" id="cap-18">两个近似值相加，</div>
+<div class="cap" id="cap-19">得到 0.30000000000000004。</div>
+<div class="cap" id="cap-20">等号比较返回 False。</div>
+<div class="cap" id="cap-21">要比较，用 math.isclose。</div>
+<div class="cap" id="cap-22">存进去的 0.1 已不是 0.1。</div>
+<div class="cap" id="cap-23">53 位有效数字。</div>
+<div class="cap" id="cap-24">大约 16 位十进制。</div>
+<div class="cap" id="cap-25">和 0.3 只差 1 个 ulp。</div>
+<div class="cap" id="cap-26">误差是确定的，不是随机噪声。</div>
+<div class="cap" id="cap-27">比较小数，别用等号。</div>
+<div class="cap" id="cap-28">金额用整数分。</div>
+<div class="cap" id="cap-29">要精确十进制，用 Decimal。</div>
+<div class="cap" id="cap-30">浮点适合计算，不适合账本。</div>
+<div class="cap" id="cap-31">浮点数不是不准。</div>
+<div class="cap" id="cap-32">它只是在用固定位数逼近无限。</div>
+<div class="cap" id="cap-33">下期，拆开这 64 个格子。</div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+tl.set("#cap-0", { opacity: 1 }, 0.150);
+tl.set("#cap-0", { opacity: 0 }, 3.689);
+tl.set("#cap-1", { opacity: 1 }, 3.949);
+tl.set("#cap-1", { opacity: 0 }, 6.104);
+tl.set("#cap-2", { opacity: 1 }, 6.364);
+tl.set("#cap-2", { opacity: 0 }, 11.585);
+tl.set("#cap-3", { opacity: 1 }, 11.845);
+tl.set("#cap-3", { opacity: 0 }, 12.581);
+tl.set("#cap-4", { opacity: 1 }, 14.001);
+tl.set("#cap-4", { opacity: 0 }, 16.357);
+tl.set("#cap-5", { opacity: 1 }, 16.617);
+tl.set("#cap-5", { opacity: 0 }, 17.419);
+tl.set("#cap-6", { opacity: 1 }, 17.679);
+tl.set("#cap-6", { opacity: 0 }, 21.235);
+tl.set("#cap-7", { opacity: 1 }, 22.415);
+tl.set("#cap-7", { opacity: 0 }, 25.062);
+tl.set("#cap-8", { opacity: 1 }, 25.322);
+tl.set("#cap-8", { opacity: 0 }, 28.482);
+tl.set("#cap-9", { opacity: 1 }, 28.742);
+tl.set("#cap-9", { opacity: 0 }, 32.146);
+tl.set("#cap-10", { opacity: 1 }, 32.406);
+tl.set("#cap-10", { opacity: 0 }, 35.390);
+tl.set("#cap-11", { opacity: 1 }, 35.650);
+tl.set("#cap-11", { opacity: 0 }, 37.544);
+tl.set("#cap-12", { opacity: 1 }, 37.804);
+tl.set("#cap-12", { opacity: 0 }, 39.574);
+tl.set("#cap-13", { opacity: 1 }, 40.754);
+tl.set("#cap-13", { opacity: 0 }, 43.609);
+tl.set("#cap-14", { opacity: 1 }, 43.869);
+tl.set("#cap-14", { opacity: 0 }, 47.374);
+tl.set("#cap-15", { opacity: 1 }, 47.634);
+tl.set("#cap-15", { opacity: 0 }, 49.376);
+tl.set("#cap-16", { opacity: 1 }, 49.636);
+tl.set("#cap-16", { opacity: 0 }, 51.888);
+tl.set("#cap-17", { opacity: 1 }, 53.068);
+tl.set("#cap-17", { opacity: 0 }, 56.159);
+tl.set("#cap-18", { opacity: 1 }, 56.419);
+tl.set("#cap-18", { opacity: 0 }, 57.853);
+tl.set("#cap-19", { opacity: 1 }, 57.913);
+tl.set("#cap-19", { opacity: 0 }, 62.208);
+tl.set("#cap-20", { opacity: 1 }, 62.468);
+tl.set("#cap-20", { opacity: 0 }, 64.252);
+tl.set("#cap-21", { opacity: 1 }, 64.512);
+tl.set("#cap-21", { opacity: 0 }, 67.173);
+tl.set("#cap-22", { opacity: 1 }, 67.433);
+tl.set("#cap-22", { opacity: 0 }, 70.516);
+tl.set("#cap-23", { opacity: 1 }, 71.786);
+tl.set("#cap-23", { opacity: 0 }, 73.337);
+tl.set("#cap-24", { opacity: 1 }, 73.597);
+tl.set("#cap-24", { opacity: 0 }, 75.158);
+tl.set("#cap-25", { opacity: 1 }, 75.418);
+tl.set("#cap-25", { opacity: 0 }, 77.644);
+tl.set("#cap-26", { opacity: 1 }, 77.904);
+tl.set("#cap-26", { opacity: 0 }, 80.661);
+tl.set("#cap-27", { opacity: 1 }, 81.841);
+tl.set("#cap-27", { opacity: 0 }, 83.861);
+tl.set("#cap-28", { opacity: 1 }, 84.121);
+tl.set("#cap-28", { opacity: 0 }, 85.405);
+tl.set("#cap-29", { opacity: 1 }, 85.665);
+tl.set("#cap-29", { opacity: 0 }, 88.038);
+tl.set("#cap-30", { opacity: 1 }, 88.298);
+tl.set("#cap-30", { opacity: 0 }, 90.854);
+tl.set("#cap-31", { opacity: 1 }, 92.124);
+tl.set("#cap-31", { opacity: 0 }, 93.541);
+tl.set("#cap-32", { opacity: 1 }, 93.801);
+tl.set("#cap-32", { opacity: 0 }, 96.459);
+tl.set("#cap-33", { opacity: 1 }, 96.719);
+tl.set("#cap-33", { opacity: 0 }, 99.274);
+window.__timelines["captions"] = tl;
+</script>
+</template></body></html>

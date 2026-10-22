@@ -1,0 +1,23 @@
+{
+ "ok": true,
+ "errors": [],
+ "warnings": [
+  "scene pivot: 7.9 chars/s is fast; slow the read",
+  "scene code: 6.3 chars/s is fast; slow the read"
+ ],
+ "scenes": 8,
+ "facts": 10,
+ "usedClaims": [
+  "c1",
+  "c2",
+  "c3",
+  "c4",
+  "c5",
+  "c6",
+  "c7",
+  "c8",
+  "c9"
+ ],
+ "narrationChars": 484,
+ "timeline": true
+}

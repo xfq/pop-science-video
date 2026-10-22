@@ -1,0 +1,12 @@
+{
+  "name": "cs-explainer-film",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "npx --yes hyperframes@0.8.184 check",
+    "preview": "npx --yes hyperframes@0.8.184 preview",
+    "snapshot": "npx --yes hyperframes@0.8.184 snapshot",
+    "render": "npx --yes hyperframes@0.8.184 render --quality delivery --output renders/final.mp4"
+  }
+}

@@ -1,0 +1,25 @@
+{
+ "ok": true,
+ "errors": [],
+ "warnings": [],
+ "info": {
+  "project": ".",
+  "video": "renders/final.mp4",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30.0,
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "duration": 100.533,
+  "lufs": -16.0,
+  "truePeak": -2.6,
+  "meanVolume": -19.0,
+  "firstFrame": {
+   "ok": true,
+   "stddev": 30.89,
+   "mean": 18.38,
+   "colors": 249
+  },
+  "captions": 34
+ }
+}

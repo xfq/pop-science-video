@@ -1,0 +1,62 @@
+{
+ "file": "assets/mix.wav",
+ "duration": 100.524,
+ "chunks": 33,
+ "music": {
+  "file": "assets/music.wav",
+  "gainDb": -17.0,
+  "duckDb": 9.0
+ },
+ "sfx": [
+  {
+   "name": "whoosh",
+   "at": 13.751,
+   "note": "scene transition"
+  },
+  {
+   "name": "whoosh",
+   "at": 22.165,
+   "note": "scene transition"
+  },
+  {
+   "name": "whoosh",
+   "at": 40.504,
+   "note": "scene transition"
+  },
+  {
+   "name": "whoosh",
+   "at": 52.818,
+   "note": "scene transition"
+  },
+  {
+   "name": "whoosh",
+   "at": 71.536,
+   "note": "scene transition"
+  },
+  {
+   "name": "whoosh",
+   "at": 81.591,
+   "note": "scene transition"
+  },
+  {
+   "name": "whoosh",
+   "at": 91.874,
+   "note": "scene transition"
+  }
+ ],
+ "targetLufs": -16.0,
+ "measuredLufs": -16.0,
+ "truePeak": -2.5,
+ "loudnorm": {
+  "input_i": "-16.39",
+  "input_tp": "-2.85",
+  "input_lra": "2.60",
+  "input_thresh": "-26.76",
+  "output_i": "-16.07",
+  "output_tp": "-2.45",
+  "output_lra": "2.30",
+  "output_thresh": "-26.41",
+  "normalization_type": "dynamic",
+  "target_offset": "0.07"
+ }
+}

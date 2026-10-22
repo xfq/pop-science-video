@@ -1,0 +1,47 @@
+Verification run: 2026-10-21, macOS 26 arm64
+
+python3 (3.14.6):
+>>> 0.1 + 0.2
+0.30000000000000004
+>>> 0.1 + 0.2 == 0.3
+False
+>>> (0.1).hex()
+'0x1.999999999999ap-4'
+>>> format(0.1, '.70f')
+'0.1000000000000000055511151231257827021181583404541015625000000000000000'
+>>> 0.30000000000000004 - 0.3
+5.551115123125783e-17
+>>> math.isclose(0.1 + 0.2, 0.3)
+True
+>>> from decimal import Decimal
+>>> Decimal('0.1') + Decimal('0.2') == Decimal('0.3')
+True
+
+node v24.19.0:
+> 0.1 + 0.2
+0.30000000000000004
+> 0.1 + 0.2 === 0.3
+false
+
+C (Apple clang):
+#include <stdio.h>
+int main(){ double a=0.1,b=0.2; printf("%.17g\n", a+b); printf("%d\n", a+b==0.3); }
+output:
+0.30000000000000004
+0
+
+Java (OpenJDK):
+class Fp { public static void main(String[] a){ double x=0.1+0.2; System.out.println(x); System.out.println(x==0.3); System.out.println(Double.toHexString(0.1)); } }
+output:
+0.30000000000000004
+false
+0x1.999999999999ap-4
+
+64-bit pattern of 0.1 (Python struct):
+0011111110111001100110011001100110011001100110011001100110011010
+hex: 0x3fb999999999999a
+
+Exact addition nuance:
+0.1_stored + 0.2_stored = 0.3000000000000000166533453693773481063544750213623046875
+This is exactly halfway between the two adjacent doubles 0.2999999999999999889... and
+0.3000000000000000444...; round-to-nearest, ties-to-even selects the upper one.

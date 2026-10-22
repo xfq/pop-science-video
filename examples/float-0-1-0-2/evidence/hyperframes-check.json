@@ -1,0 +1,470 @@
+{
+ "ok": true,
+ "lint": {
+  "ok": true,
+  "errorCount": 0,
+  "warningCount": 0,
+  "infoCount": 0,
+  "findings": [],
+  "filesScanned": 10
+ },
+ "runtime": {
+  "ok": true,
+  "errorCount": 0,
+  "warningCount": 0,
+  "infoCount": 0,
+  "findings": []
+ },
+ "layout": {
+  "ok": true,
+  "errorCount": 0,
+  "warningCount": 1,
+  "infoCount": 8,
+  "findings": [
+   {
+    "code": "container_overflow",
+    "severity": "warning",
+    "time": 27.923,
+    "selector": "div.scene.scene-pipeline > div:nth-of-type(2)",
+    "message": "Element extends outside a clipping layout container.",
+    "rect": {
+     "left": -260,
+     "top": -420,
+     "right": 840,
+     "bottom": 680,
+     "width": 1100,
+     "height": 1100
+    },
+    "containerSelector": "div.scene.scene-pipeline",
+    "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+    "containerRect": {
+     "left": 0,
+     "top": 0,
+     "right": 1920,
+     "bottom": 1080,
+     "width": 1920,
+     "height": 1080
+    },
+    "overflow": {
+     "left": 260,
+     "top": 420
+    },
+    "dataAttributes": {},
+    "sourceFile": "compositions/03-pipeline.html",
+    "bbox": {
+     "x": -260,
+     "y": -420,
+     "width": 1100,
+     "height": 1100
+    },
+    "firstSeen": 27.923,
+    "lastSeen": 39.093,
+    "occurrences": 2,
+    "heldMs": 0,
+    "times": [
+     27.923,
+     39.093
+    ]
+   },
+   {
+    "code": "container_overflow",
+    "severity": "info",
+    "time": 5.585,
+    "selector": "div.scene.scene-hook > div:nth-of-type(2)",
+    "message": "Element extends outside a clipping layout container.",
+    "rect": {
+     "left": -260,
+     "top": -420,
+     "right": 840,
+     "bottom": 680,
+     "width": 1100,
+     "height": 1100
+    },
+    "containerSelector": "div.scene.scene-hook",
+    "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+    "containerRect": {
+     "left": 0,
+     "top": 0,
+     "right": 1920,
+     "bottom": 1080,
+     "width": 1920,
+     "height": 1080
+    },
+    "overflow": {
+     "left": 260,
+     "top": 420
+    },
+    "dataAttributes": {},
+    "sourceFile": "compositions/01-hook.html",
+    "bbox": {
+     "x": -260,
+     "y": -420,
+     "width": 1100,
+     "height": 1100
+    },
+    "firstSeen": 5.585,
+    "lastSeen": 5.585,
+    "occurrences": 1,
+    "heldMs": 0,
+    "times": [
+     5.585
+    ]
+   },
+   {
+    "code": "container_overflow",
+    "severity": "info",
+    "time": 5.585,
+    "selector": "div.hook-result",
+    "message": "Nowrap text is wider than its container.",
+    "rect": {
+     "left": 96.73,
+     "top": 542.76,
+     "right": 1473.27,
+     "bottom": 635.58,
+     "width": 1376.55,
+     "height": 92.83
+    },
+    "containerSelector": "div.hook-copy",
+    "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+    "containerRect": {
+     "left": 120,
+     "top": 331.73,
+     "right": 1450,
+     "bottom": 738.02,
+     "width": 1330,
+     "height": 406.28
+    },
+    "overflow": {
+     "left": 23.27,
+     "right": 23.27
+    },
+    "dataAttributes": {
+     "data-reveal": "result",
+     "data-anim": "pulse",
+     "data-shown": "1"
+    },
+    "sourceFile": "compositions/01-hook.html",
+    "bbox": {
+     "x": 96.73,
+     "y": 542.76,
+     "width": 1376.55,
+     "height": 92.83
+    },
+    "firstSeen": 5.585,
+    "lastSeen": 5.585,
+    "occurrences": 1,
+    "heldMs": 0,
+    "times": [
+     5.585
+    ]
+   },
+   {
+    "code": "container_overflow",
+    "severity": "info",
+    "time": 16.754,
+    "selector": "div.scene.scene-statement > div:nth-of-type(2)",
+    "message": "Element extends outside a clipping layout container.",
+    "rect": {
+     "left": -260,
+     "top": -420,
+     "right": 840,
+     "bottom": 680,
+     "width": 1100,
+     "height": 1100
+    },
+    "containerSelector": "div.scene.scene-statement",
+    "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+    "containerRect": {
+     "left": 0,
+     "top": 0,
+     "right": 1920,
+     "bottom": 1080,
+     "width": 1920,
+     "height": 1080
+    },
+    "overflow": {
+     "left": 260,
+     "top": 420
+    },
+    "dataAttributes": {},
+    "sourceFile": "compositions/02-pivot.html",
+    "bbox": {
+     "x": -260,
+     "y": -420,
+     "width": 1100,
+     "height": 1100
+    },
+    "firstSeen": 16.754,
+    "lastSeen": 16.754,
+    "occurrences": 1,
+    "heldMs": 0,
+    "times": [
+     16.754
+    ]
+   },
+   {
+    "code": "container_overflow",
+    "severity": "info",
+    "time": 50.262,
+    "selector": "div.scene.scene-bitfield > div:nth-of-type(2)",
+    "message": "Element extends outside a clipping layout container.",
+    "rect": {
+     "left": -260,
+     "top": -420,
+     "right": 840,
+     "bottom": 680,
+     "width": 1100,
+     "height": 1100
+    },
+    "containerSelector": "div.scene.scene-bitfield",
+    "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+    "containerRect": {
+     "left": 0,
+     "top": 0,
+     "right": 1920,
+     "bottom": 1080,
+     "width": 1920,
+     "height": 1080
+    },
+    "overflow": {
+     "left": 260,
+     "top": 420
+    },
+    "dataAttributes": {},
+    "sourceFile": "compositions/04-bitfield.html",
+    "bbox": {
+     "x": -260,
+     "y": -420,
+     "width": 1100,
+     "height": 1100
+    },
+    "firstSeen": 50.262,
+    "lastSeen": 50.262,
+    "occurrences": 1,
+    "heldMs": 0,
+    "times": [
+     50.262
+    ]
+   },
+   {
+    "code": "container_overflow",
+    "severity": "info",
+    "time": 61.431,
+    "selector": "div.scene.scene-code > div:nth-of-type(2)",
+    "message": "Element extends outside a clipping layout container.",
+    "rect": {
+     "left": -260,
+     "top": -420,
+     "right": 840,
+     "bottom": 680,
+     "width": 1100,
+     "height": 1100
+    },
+    "containerSelector": "div.scene.scene-code",
+    "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+    "containerRect": {
+     "left": 0,
+     "top": 0,
+     "right": 1920,
+     "bottom": 1080,
+     "width": 1920,
+     "height": 1080
+    },
+    "overflow": {
+     "left": 260,
+     "top": 420
+    },
+    "dataAttributes": {},
+    "sourceFile": "compositions/05-code.html",
+    "bbox": {
+     "x": -260,
+     "y": -420,
+     "width": 1100,
+     "height": 1100
+    },
+    "firstSeen": 61.431,
+    "lastSeen": 61.431,
+    "occurrences": 1,
+    "heldMs": 0,
+    "times": [
+     61.431
+    ]
+   },
+   {
+    "code": "container_overflow",
+    "severity": "info",
+    "time": 72.601,
+    "selector": "div.scene.scene-numbers > div:nth-of-type(2)",
+    "message": "Element extends outside a clipping layout container.",
+    "rect": {
+     "left": -260,
+     "top": -420,
+     "right": 840,
+     "bottom": 680,
+     "width": 1100,
+     "height": 1100
+    },
+    "containerSelector": "div.scene.scene-numbers",
+    "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+    "containerRect": {
+     "left": 0,
+     "top": 0,
+     "right": 1920,
+     "bottom": 1080,
+     "width": 1920,
+     "height": 1080
+    },
+    "overflow": {
+     "left": 260,
+     "top": 420
+    },
+    "dataAttributes": {},
+    "sourceFile": "compositions/06-numbers.html",
+    "bbox": {
+     "x": -260,
+     "y": -420,
+     "width": 1100,
+     "height": 1100
+    },
+    "firstSeen": 72.601,
+    "lastSeen": 72.601,
+    "occurrences": 1,
+    "heldMs": 0,
+    "times": [
+     72.601
+    ]
+   },
+   {
+    "code": "container_overflow",
+    "severity": "info",
+    "time": 83.77,
+    "selector": "div.scene.scene-recap > div:nth-of-type(2)",
+    "message": "Element extends outside a clipping layout container.",
+    "rect": {
+     "left": -260,
+     "top": -420,
+     "right": 840,
+     "bottom": 680,
+     "width": 1100,
+     "height": 1100
+    },
+    "containerSelector": "div.scene.scene-recap",
+    "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+    "containerRect": {
+     "left": 0,
+     "top": 0,
+     "right": 1920,
+     "bottom": 1080,
+     "width": 1920,
+     "height": 1080
+    },
+    "overflow": {
+     "left": 260,
+     "top": 420
+    },
+    "dataAttributes": {},
+    "sourceFile": "compositions/07-recap.html",
+    "bbox": {
+     "x": -260,
+     "y": -420,
+     "width": 1100,
+     "height": 1100
+    },
+    "firstSeen": 83.77,
+    "lastSeen": 83.77,
+    "occurrences": 1,
+    "heldMs": 0,
+    "times": [
+     83.77
+    ]
+   },
+   {
+    "code": "container_overflow",
+    "severity": "info",
+    "time": 94.939,
+    "selector": "div.scene.scene-outro > div:nth-of-type(2)",
+    "message": "Element extends outside a clipping layout container.",
+    "rect": {
+     "left": -260,
+     "top": -420,
+     "right": 840,
+     "bottom": 680,
+     "width": 1100,
+     "height": 1100
+    },
+    "containerSelector": "div.scene.scene-outro",
+    "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+    "containerRect": {
+     "left": 0,
+     "top": 0,
+     "right": 1920,
+     "bottom": 1080,
+     "width": 1920,
+     "height": 1080
+    },
+    "overflow": {
+     "left": 260,
+     "top": 420
+    },
+    "dataAttributes": {},
+    "sourceFile": "compositions/08-outro.html",
+    "bbox": {
+     "x": -260,
+     "y": -420,
+     "width": 1100,
+     "height": 1100
+    },
+    "firstSeen": 94.939,
+    "lastSeen": 94.939,
+    "occurrences": 1,
+    "heldMs": 0,
+    "times": [
+     94.939
+    ]
+   }
+  ],
+  "duration": 100.524,
+  "samples": [
+   5.585,
+   16.754,
+   27.923,
+   39.093,
+   50.262,
+   61.431,
+   72.601,
+   83.77,
+   94.939
+  ],
+  "transitionSamples": [],
+  "transitionSamplesDropped": 0,
+  "tolerance": 2,
+  "totalIssueCount": 9,
+  "truncated": false
+ },
+ "motion": {
+  "ok": true,
+  "errorCount": 0,
+  "warningCount": 0,
+  "infoCount": 0,
+  "findings": [],
+  "enabled": false,
+  "samples": 0
+ },
+ "contrast": {
+  "ok": true,
+  "errorCount": 0,
+  "warningCount": 0,
+  "infoCount": 0,
+  "findings": [],
+  "enabled": true,
+  "samples": [
+   5.585,
+   27.923,
+   50.262,
+   72.601,
+   94.939
+  ],
+  "checked": 152,
+  "passed": 152
+ }
+}
