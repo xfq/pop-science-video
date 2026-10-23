@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from film_lib import cap_captions, estimate_timeline, normalize_lexicon, split_caption  # noqa: E402
+from check_content import banned_phrases  # noqa: E402
 
 DEMO = ROOT / "examples" / "float-0-1-0-2"
 
@@ -42,6 +43,60 @@ class CaptionTests(unittest.TestCase):
             {"text": "b", "start": 2.0, "dur": 3.0},
         ], 10.0)
         self.assertLessEqual(caps[0]["start"] + caps[0]["dur"], caps[1]["start"])
+
+
+class StyleTests(unittest.TestCase):
+    def test_banned_antithesis_is_an_error(self):
+        for text in (
+            "这不是 bug，而是舍入。",
+            "这并不是 Python 的锅，而是二进制。",
+            "并非精度问题，而是范围问题。",
+        ):
+            with self.subTest(text=text):
+                self.assertEqual([kind for kind, _ in banned_phrases(text)], ["error"])
+
+    def test_same_sentence_variant_is_a_warning(self):
+        self.assertEqual(
+            [kind for kind, _ in banned_phrases("这不是 bug，是舍入。")],
+            ["warning"],
+        )
+
+    def test_plain_negation_is_allowed(self):
+        for text in (
+            "这不是 bug。",
+            "误差是确定的，不是随机噪声。",
+            "这不是 bug，也不是 Python 的锅。",
+        ):
+            with self.subTest(text=text):
+                self.assertFalse(banned_phrases(text))
+
+    def test_check_content_rejects_banned_antithesis(self):
+        with tempfile.TemporaryDirectory(prefix="cs-banned-") as td:
+            project = Path(td)
+            (project / "evidence").mkdir()
+            film = {
+                "meta": {"title": "测试", "language": "zh-CN", "takeaway": "测试"},
+                "scenes": [
+                    {"id": "a", "type": "hook", "narration": [
+                        {"caption": "这不是 bug，而是舍入。", "tts": "这不是 bug，而是舍入。"}]},
+                    {"id": "b", "type": "statement", "narration": [
+                        {"caption": "正面结论。", "tts": "正面结论。"}]},
+                    {"id": "c", "type": "recap", "narration": [
+                        {"caption": "收尾。", "tts": "收尾。"}]},
+                ],
+            }
+            (project / "film.json").write_text(json.dumps(film, ensure_ascii=False), encoding="utf-8")
+            (project / "facts.json").write_text('{"claims": [], "analogies": []}', encoding="utf-8")
+            proc = subprocess.run([
+                sys.executable, str(ROOT / "scripts" / "check_content.py"),
+                "--project", str(project), "--json",
+            ], capture_output=True, text=True)
+            self.assertEqual(proc.returncode, 1, proc.stdout + proc.stderr)
+            report = json.loads(proc.stdout)
+            self.assertTrue(
+                any("不是……而是" in error for error in report["errors"]),
+                report["errors"],
+            )
 
 
 class TimelineTests(unittest.TestCase):

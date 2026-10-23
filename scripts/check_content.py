@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+from collections.abc import Iterator
 from pathlib import Path
 
 from film_lib import cps_for, read_json, split_caption, write_json
@@ -16,6 +17,35 @@ from film_lib import cps_for, read_json, split_caption, write_json
 TYPES = {"hook", "statement", "pipeline", "bitfield", "code", "compare", "numbers", "layers", "recap", "outro"}
 STATUS = {"verified", "needs-review", "unverified", "opinion"}
 PLACEHOLDERS = ("待定", "在这里", "replace-me", "TODO", "Lorem", "下一个问题，", "第一句话")
+
+# “不是……而是” is banned in narration and on-screen text: it turns an
+# explanation into a rhetorical reveal and is a strong AI-writing tell.
+BANNED_ANTITHESIS = re.compile(r"(?:不是|并非)[^。！？!?\n]*?而是")
+BANNED_ANTITHESIS_VARIANT = re.compile(r"(?:不是|并非)[^。！？!?\n]*?[，,；;]\s*是(?!否)")
+
+
+def banned_phrases(text: str) -> list[tuple[str, str]]:
+    """Return (severity, snippet) for every banned antithesis in one string."""
+    errors = [m for m in BANNED_ANTITHESIS.finditer(text)]
+    hits = [("error", m.group(0)) for m in errors]
+    for match in BANNED_ANTITHESIS_VARIANT.finditer(text):
+        if any(match.start() >= m.start() and match.end() <= m.end() for m in errors):
+            continue
+        hits.append(("warning", match.group(0)))
+    return hits
+
+
+def iter_strings(node: object, path: str = "") -> Iterator[tuple[str, str]]:
+    """Yield (json path, string) for every string in the film."""
+    if isinstance(node, dict):
+        for key, value in node.items():
+            child = f"{path}.{key}" if path else str(key)
+            yield from iter_strings(value, child)
+    elif isinstance(node, list):
+        for index, value in enumerate(node):
+            yield from iter_strings(value, f"{path}[{index}]")
+    elif isinstance(node, str):
+        yield path, node
 
 
 def main() -> None:
@@ -94,6 +124,37 @@ def main() -> None:
                     used_claims.add(cid)
         if scene.get("type") in {"numbers", "bitfield"} and not scene.get("claim"):
             warnings.append(f"scene {sid}: number/encoding scene does not cite a claim")
+
+    reported_constructions: set[tuple[str, str]] = set()
+    for path, text in iter_strings(film):
+        for severity, snippet in banned_phrases(text):
+            label = f"film.json {path}" if path else "film.json"
+            scope = "film.json"
+            if path.startswith("scenes["):
+                closing = path.find("]")
+                try:
+                    scene_index = int(path[7:closing])
+                    scene = scenes[scene_index]
+                    sid = scene.get("id", scene_index) if isinstance(scene, dict) else scene_index
+                    rest = path[closing + 1:].lstrip(".")
+                    label = f"scene {sid}" + (f" {rest}" if rest else "")
+                    scope = f"scene {sid}"
+                except (ValueError, IndexError):
+                    pass
+            key = (scope, snippet)
+            if key in reported_constructions:
+                continue
+            reported_constructions.add(key)
+            if severity == "error":
+                errors.append(
+                    f"{label}: banned “不是……而是” construction {snippet!r}; "
+                    "state the positive claim directly"
+                )
+            else:
+                warnings.append(
+                    f"{label}: “不是 A，是 B” antithesis variant {snippet!r}; "
+                    "rewrite it as a direct statement"
+                )
 
     for cid in used_claims:
         claim = claims[cid]
