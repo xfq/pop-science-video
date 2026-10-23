@@ -261,13 +261,23 @@ evidence/               核验、时间轴、混音、检查报告
 recording/NARRATION.md  录音稿
 ```
 
+### 4.7 改台词
+
+已有工程改词不需要重跑整条链，只改 `film.json` 的 `narration[]`，然后：
+
+```bash
+python3 "$SKILL/scripts/revise.py" --project ~/films/why-dns-is-fast
+```
+
+它会只重录 `tts` 变了的句子，重排时间轴、按需重做配乐、混音、构建，并检查 mark/时长/响度和构建警告。加 `--render draft` 出草稿，`--render delivery` 出正式片；两者渲染前都会跑 `hyperframes check`，正式片渲染后还会跑交付检查。真人录音先不带 `--import` 跑一次看要重录/改名的 take，录完再加 `--import`。
+
 ## 5. 日常使用提示
 
 - **主题要具体**：“为什么 0.1 + 0.2 不等于 0.3”比“浮点数科普”好做。
 - **先要方向**：让 agent 先给三个角度 + 镜头表，确认后再动画/配音。
 - **事实先行**：要求它跑代码、给来源、标 `caveat`；不要接受“网上都这么说”。
 - **旁白优先真人**：TTS 只做草稿；用 `audition_voices.py` 试听也比默认 Tingting 好。
-- **一次只改一层**：先文案，再画面，再声音；每次重跑对应脚本。
+- **一次只改一层**：先文案，再画面，再声音；改台词用 `revise.py`，它会按需重跑对应脚本。
 - **别把工程放 skill 里**：升级/重装 skill 不会碰你的片子。
 
 ## 6. 更新与卸载

@@ -36,6 +36,16 @@ python3 <SKILL>/scripts/mix_audio.py --project <FILM>
 
 外部 TTS（ElevenLabs/Azure/HeyGen）也可以逐句导出后走同一个导入流程。
 
+## 改台词
+
+台词在 `film.json` 每个镜头的 `narration[]` 里：`caption` 是屏幕字幕，`tts` 是配音读法。改完一条命令：
+
+```sh
+python3 <SKILL>/scripts/revise.py --project <FILM>
+```
+
+它先跑内容检查，只重录文本变了的句子，重排时间轴，时长变了才重做配乐，重新混音和构建。只改字幕、不动读音时不会重录。加 `--render draft` 或 `--render delivery` 会先跑 `hyperframes check`；正式片渲染后还会跑交付检查。报告在 `evidence/revise.json`。
+
 ## 十种镜头
 
 模板自带 10 种可组合的镜头，全部由 `film.json` 驱动：
@@ -111,7 +121,7 @@ INSTALL.md                  安装、验证、首次做片、更新/卸载、排
 install.sh                  一键复制/链接到 skills 目录
 references/                 选题、事实、叙事、视觉、台词、声音、制作、审片、案例
 assets/template/            可运行模板：build.mjs、10 种镜头、字体、GSAP、音效
-scripts/                    init / check / tts / timeline / music / mix / delivery
+scripts/                    init / check / tts / timeline / music / mix / revise / delivery
 examples/float-0-1-0-2/     完整示例工程、成片、来源、证据
 tests/                      脚本与构建回归
 agents/                     Codex 展示信息

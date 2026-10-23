@@ -20,6 +20,18 @@ description: 把一个概念做成一个科普视频：先核对事实与理解�
 7. **搭建、检查、渲染。** `node build.mjs` 生成 HyperFrames 工程；`npx --yes hyperframes@0.8.184 check` 必须通过；按镜头中点 `snapshot` 逐张看全尺寸帧，修完再渲染。正式片用 `--quality delivery`，先渲 8–12 秒草稿确认动态，再渲全片。
 8. **审片与交付。** 按 [审片与交付](references/review-and-delivery.md) 做事实、理解、画面、声音四遍审阅；`check_delivery.py` 只证明文件、时长、响度和首帧，不替代观看与试听。交付 MP4、可复现工程、关键静帧、`SOURCES.md` / `facts.json` / 两份检查报告，并说清哪些已验证、哪些仍有条件限制。
 
+## 改台词（已有工程）
+
+台词只改 `film.json` 的 `narration[]`：`caption` 是屏幕字幕，`tts` 是配音读法，`mark` 是画面揭示点。不要手改 `timeline.json` 或 `compositions/`，它们是生成物。改完一条命令：
+
+```sh
+python3 <SKILL>/scripts/revise.py --project <FILM>                    # 检查 + 增量重录 + 重排 + 混音 + 构建
+python3 <SKILL>/scripts/revise.py --project <FILM> --render draft     # 再出一版可看的草稿
+python3 <SKILL>/scripts/revise.py --project <FILM> --render delivery  # 正式片：check + 交付检查
+```
+
+它沿用已有旁白的 provider/音色，只重录 `tts` 变了的句子；只改字幕时不重录。内容检查、mark 完整性、时长、混音响度、构建警告、渲染前的 `hyperframes check` 和正式片渲染后的 `check_delivery.py` 都会跑，报告写 `evidence/revise.json`。真人录音先不带 `--import` 跑一次，按列出的 take 重录/改名，再带 `--import` 跑。`--dry-run` 只出计划；`--revoice` 按 `film.json` 的 voice 设置重录全部。
+
 ## 硬约束
 
 - **事实可追溯。** 正式片至少两条 primary source；每条主张有 `facts.json` 记录；代码输出实机运行；数字给单位、口径和时间。范围只覆盖你核过的那部分，不把“我查到的”说成“全部”。
@@ -103,9 +115,12 @@ npx --yes hyperframes@0.8.184 render --quality delivery --output renders/final.m
 
 # 3. 交付检查
 python3 <SKILL>/scripts/check_delivery.py --project <FILM>
+
+# 4. 改台词（已有工程）
+python3 <SKILL>/scripts/revise.py --project <FILM>
 ```
 
-真人录音走 `make_recording_kit.py` → 录 `recording/takes/<scene>-<NNN>.wav` → `import_recordings.py`；导入后不要跑 `tts.py`（它会拒绝覆盖 human manifest，除非 `--force`）。`tts.py` 的 provider：`auto` 先试 edge，失败后在 macOS 回退 `say`；`say` 用 `--voice Tingting` 等本机中文音色；`file` 用于外部 TTS/已有录音。正式片优先真人，TTS 只作为草稿或没有录音条件时的方案。
+真人录音走 `make_recording_kit.py` → 录 `recording/takes/<scene>-<NNN>.wav` → `import_recordings.py`；导入后不要跑 `tts.py`（它会拒绝覆盖 human manifest，除非 `--force`）。`tts.py` 默认沿用已有 manifest 的 provider（避免改台词时换音色），显式 `--provider` 才切换；`auto` 先试 edge，失败后在 macOS 回退 `say`；`say` 用 `--voice Tingting` 等本机中文音色；`file` 用于外部 TTS/已有录音。正式片优先真人，TTS 只作为草稿或没有录音条件时的方案。
 
 `hyperframes` 不可用时先 `npm i -g hyperframes@0.8.184` 或直接 `npx --yes hyperframes@0.8.184`。环境检查只报告，不自动安装系统软件。
 

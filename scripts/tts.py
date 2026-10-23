@@ -9,6 +9,9 @@ Providers:
 
   python3 scripts/tts.py --project ./film
   python3 scripts/tts.py --project ./film --provider say --voice Tingting --rate 180
+
+Without --provider, an existing manifest's provider is reused so a revision
+cannot silently switch voices; pass --provider to change it on purpose.
 """
 from __future__ import annotations
 
@@ -27,6 +30,16 @@ from film_lib import duration, normalize_lexicon, read_json, require_ffmpeg, run
 
 class TTSError(RuntimeError):
     pass
+
+
+def resolve_provider(explicit: str | None, old: dict, voice_cfg: dict) -> str:
+    """Keep the provider of existing clips; `auto` must not switch voices mid-film."""
+    if explicit:
+        return explicit
+    remembered = (old or {}).get("provider")
+    if remembered in {"edge", "say", "file"}:
+        return remembered
+    return (voice_cfg or {}).get("provider") or "auto"
 
 
 def sha(text: str) -> str:
@@ -89,16 +102,16 @@ def main() -> None:
         raise SystemExit(f"film.json not found in {project}")
     meta = film.get("meta", {})
     voice_cfg = meta.get("voice", {}) or {}
-    provider = args.provider or voice_cfg.get("provider") or "auto"
+    out_dir = project / "assets" / "tts"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    manifest_path = out_dir / "manifest.json"
+    old = read_json(manifest_path, {}) or {}
+    provider = resolve_provider(args.provider, old, voice_cfg)
     say_voice = args.voice or voice_cfg.get("voice") or "Tingting"
     edge_voice = args.voice or voice_cfg.get("edgeVoice") or "zh-CN-YunxiNeural"
     rate = args.rate or int(voice_cfg.get("rate") or 180)
     edge_rate = args.edge_rate or voice_cfg.get("edgeRate") or "+8%"
     lexicon = voice_cfg.get("lexicon") or {}
-    out_dir = project / "assets" / "tts"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    manifest_path = out_dir / "manifest.json"
-    old = read_json(manifest_path, {}) or {}
     if old.get("provider") == "human" and not args.force:
         raise SystemExit("this project uses human recordings (manifest provider=human). "
                          "Run without tts.py, or pass --force to replace them with TTS.")

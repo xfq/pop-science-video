@@ -126,6 +126,18 @@ npx --yes hyperframes@0.8.184 render --quality delivery --output renders/final.m
 
 时间轴会按真实语速重排，**不要手动改字幕时间**。如果某句比目标长很多，先改台词/重录，不要用 1.5× 变速硬压。
 
+### 5. 改一句台词
+
+只改 `film.json` 的 `narration[].caption/tts`，然后：
+
+```sh
+python3 <SKILL>/scripts/revise.py --project <FILM>            # 列出要重录/改名的 take
+# 重录或改名后：
+python3 <SKILL>/scripts/revise.py --project <FILM> --import
+```
+
+**不要只改 text 就重跑 import**：take 按位置命名（`hook-002.wav`），在中间插入或删除一句会让后面的 take 整体错位。`revise.py --import` 会比较 take 的哈希，发现“台词变了但音频没换”就停下，不会静默配错；改名时从后往前改，避免覆盖。
+
 ## 处理原则
 
 - **轻处理**：trim + 高通 + 峰值归一就够了。不要用重压缩、混响、AI 降噪把声音做“干净”，那会更快变成机器感。
